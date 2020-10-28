@@ -1,6 +1,10 @@
 package com.thejavinhos.tvchannel.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Actor {
@@ -27,7 +31,29 @@ public class Actor {
 
     @Column(name = "genre_work")
     private String genreWork;
-    private int reservationTotal = 0;
+
+    @ElementCollection
+    @Column(name = "reservations")
+    private List<Date> reservations = new ArrayList();
+
+    private Date dateReserveBegin;
+    private Date dateReserveEnd;
+
+    public Date getDateReserveBegin() {
+        return dateReserveBegin;
+    }
+
+    public void setDateReserveBegin(Date dateReserveBegin) {
+        this.dateReserveBegin = dateReserveBegin;
+    }
+
+    public Date getDateReserveEnd() {
+        return dateReserveEnd;
+    }
+
+    public void setDateReserveEnd(Date dateReserveEnd) {
+        this.dateReserveEnd = dateReserveEnd;
+    }
 
 
     public int getId() {
@@ -94,11 +120,30 @@ public class Actor {
         this.genreWork = genreWork;
     }
 
-    public int getReservationTotal() {
-        return reservationTotal;
+
+
+    public List<Date> getReservations() {
+        return reservations;
     }
 
-    public void setReservationTotal(int reservationTotal) {
-        this.reservationTotal = reservationTotal;
+    public void setReservations(List<Date> reservations) {
+        this.reservations = reservations;
     }
+
+
+    public List<Date> datas(Date dataInicial, Date dataFinal){
+        List<Date> datas = new ArrayList<Date>();
+        datas.add(dataInicial);
+        Calendar inicio = Calendar.getInstance();
+        inicio.setTime(dataInicial);
+        while(inicio.getTime().before(dataFinal)){
+            inicio.add(Calendar.DAY_OF_YEAR,1);
+            datas.add(inicio.getTime());
+        }
+        return datas;
+    }
+
+
+
+
 }

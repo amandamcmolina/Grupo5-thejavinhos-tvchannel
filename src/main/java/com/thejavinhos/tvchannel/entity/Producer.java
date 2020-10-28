@@ -18,17 +18,9 @@ public class Producer {
     private int password;
     @Column(name = "username")
     private String username;
-    @ElementCollection
-    @Column(name = "reservations")
-    private List<String> reservations = new ArrayList();
 
-    public List<String> getReservations() {
-        return reservations;
-    }
 
-    public void setReservations(List<String> reservations) {
-        this.reservations = reservations;
-    }
+
 
     public int getId() {
         return id;

@@ -5,9 +5,7 @@ import com.thejavinhos.tvchannel.service.ActorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/actors")
@@ -20,5 +18,10 @@ public class ActorController {
     @PostMapping
     public ResponseEntity<Actor> createActor(@RequestBody Actor actor){
         return ResponseEntity.ok(actorService.saveActor(actor));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Actor> reservationActor(@PathVariable int id, @RequestBody Actor actor){
+        return ResponseEntity.ok(actorService.reservationDates(actor , id));
     }
 }
