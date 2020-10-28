@@ -5,7 +5,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 public class Actor {
 
@@ -42,77 +46,7 @@ public class Actor {
     private int reservationTotal = 0;
 
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public int getPassword() {
-        return password;
-    }
-
-    public void setPassword(int password) {
-        this.password = password;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public double getPayment() {
-        return payment;
-    }
-
-    public void setPayment(double payment) {
-        this.payment = payment;
-    }
-
-    public boolean isAvailable() {
-        return available;
-    }
-
-    public void setAvailable(boolean available) {
-        this.available = available;
-    }
-
-    public String getGenreWork() {
-        return genreWork;
-    }
-
-    public void setGenreWork(String genreWork) {
-        this.genreWork = genreWork;
-    }
-
-    public int getReservationTotal() {
-        return reservationTotal;
-    }
-
-    public void setReservationTotal(int reservationTotal) {
-        this.reservationTotal = reservationTotal;
-    }
 
     public List<Date> datas(Date dataInicial, Date dataFinal){
         List<Date> datas = new ArrayList<Date>();
@@ -126,27 +60,5 @@ public class Actor {
         return datas;
     }
 
-    public List<Date> getReservations() {
-        return reservations;
-    }
 
-    public void setReservations(List<Date> reservations) {
-        this.reservations = reservations;
-    }
-
-    public Date getDateReserveBegin() {
-        return dateReserveBegin;
-    }
-
-    public void setDateReserveBegin(Date dateReserveBegin) {
-        this.dateReserveBegin = dateReserveBegin;
-    }
-
-    public Date getDateReserveEnd() {
-        return dateReserveEnd;
-    }
-
-    public void setDateReserveEnd(Date dateReserveEnd) {
-        this.dateReserveEnd = dateReserveEnd;
-    }
 }
