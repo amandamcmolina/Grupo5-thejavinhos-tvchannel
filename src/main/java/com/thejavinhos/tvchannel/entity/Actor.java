@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+
 @Entity
 public class Actor {
 
@@ -36,6 +38,7 @@ public class Actor {
     @Column(name = "genre_work")
     private String genreWork;
 
+
     @ElementCollection
     @Column(name = "reservations")
     private List<Date> reservations = new ArrayList();
@@ -59,6 +62,7 @@ public class Actor {
         }
         return datas;
     }
+
 
 
 }
