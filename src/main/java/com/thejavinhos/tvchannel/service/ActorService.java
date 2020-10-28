@@ -24,15 +24,15 @@ public class ActorService {
     public Actor reservationDates(Actor actor, int id) {
         var inicial = actor.getDateReserveBegin();
         var end = actor.getDateReserveEnd();
-       var dates =  actor.datas(inicial,end);
-           return (Actor) actorRepository.findById(id).map(a ->{
-               if(a.getReservations().contains(inicial) || a.getReservations().contains(end)){
-                   return "Indisponivel";
-               }
-               a.setReservations(dates);
-               return actorRepository.save(a);
+        var dates =  actor.datas(inicial,end);
+        return (Actor) actorRepository.findById(id).map(a ->{
+            if(a.getReservations().contains(inicial) || a.getReservations().contains(end)){
+                return "Indisponivel";
+            }
+            a.setReservations(dates);
+            return actorRepository.save(a);
 
-           }).orElseThrow();
+        }).orElseThrow();
     }
 
     public List<Actor> listAllActors() {

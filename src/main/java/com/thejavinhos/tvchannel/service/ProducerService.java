@@ -11,10 +11,12 @@ import org.springframework.stereotype.Component;
 public class ProducerService {
     @Autowired
     private ProducerRepository producerRepository;
+    private ActorRepository actorRepository;
 
     public Producer saveProducer(Producer producer) {
         return producerRepository.save(producer);
 
 
     }
+
 }

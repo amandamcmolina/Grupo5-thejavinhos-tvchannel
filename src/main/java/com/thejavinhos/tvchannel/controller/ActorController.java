@@ -26,8 +26,9 @@ public class ActorController {
         return ResponseEntity.ok(actorService.saveActor(actor));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/reserveActor/{id}")
     public ResponseEntity<Actor> reservationActor(@PathVariable int id, @RequestBody Actor actor){
-        return ResponseEntity.ok(actorService.reservationDates(actor , id));
+        return ResponseEntity.ok(actorService.reservationDates(actor, id));
     }
+
 }

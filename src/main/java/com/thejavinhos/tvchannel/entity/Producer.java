@@ -2,6 +2,7 @@ package com.thejavinhos.tvchannel.entity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -18,6 +19,8 @@ public class Producer {
     private int password;
     @Column(name = "username")
     private String username;
+
+
 
 
 
