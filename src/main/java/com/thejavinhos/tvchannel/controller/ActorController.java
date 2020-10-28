@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/actors")
 public class ActorController {
@@ -14,6 +16,10 @@ public class ActorController {
     @Autowired
     private ActorService actorService;
 
+    @GetMapping
+    public ResponseEntity<List<Actor>> listAll(){
+        return ResponseEntity.ok(actorService.listAllActors());
+    }
 
     @PostMapping
     public ResponseEntity<Actor> createActor(@RequestBody Actor actor){

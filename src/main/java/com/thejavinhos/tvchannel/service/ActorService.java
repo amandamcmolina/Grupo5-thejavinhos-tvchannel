@@ -25,11 +25,17 @@ public class ActorService {
         var inicial = actor.getDateReserveBegin();
         var end = actor.getDateReserveEnd();
        var dates =  actor.datas(inicial,end);
-        return (Actor) actorRepository.findById(id).map(a ->{ ;
-            a.setReservations(dates);
-             return actorRepository.save(a);
+           return (Actor) actorRepository.findById(id).map(a ->{
+               if(a.getReservations().contains(inicial) || a.getReservations().contains(end)){
+                   return "Indisponivel";
+               }
+               a.setReservations(dates);
+               return actorRepository.save(a);
 
-        }).orElseThrow();
+           }).orElseThrow();
+    }
 
+    public List<Actor> listAllActors() {
+        return (List<Actor>) actorRepository.findAll();
     }
 }
