@@ -1,6 +1,10 @@
 package com.thejavinhos.tvchannel.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Actor {
@@ -27,6 +31,14 @@ public class Actor {
 
     @Column(name = "genre_work")
     private String genreWork;
+
+    @ElementCollection
+    @Column(name = "reservations")
+    private List<Date> reservations = new ArrayList();
+
+    private Date dateReserveBegin;
+    private Date dateReserveEnd;
+
     private int reservationTotal = 0;
 
 
@@ -100,5 +112,41 @@ public class Actor {
 
     public void setReservationTotal(int reservationTotal) {
         this.reservationTotal = reservationTotal;
+    }
+
+    public List<Date> datas(Date dataInicial, Date dataFinal){
+        List<Date> datas = new ArrayList<Date>();
+        datas.add(dataInicial);
+        Calendar inicio = Calendar.getInstance();
+        inicio.setTime(dataInicial);
+        while(inicio.getTime().before(dataFinal)){
+            inicio.add(Calendar.DAY_OF_YEAR,1);
+            datas.add(inicio.getTime());
+        }
+        return datas;
+    }
+
+    public List<Date> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<Date> reservations) {
+        this.reservations = reservations;
+    }
+
+    public Date getDateReserveBegin() {
+        return dateReserveBegin;
+    }
+
+    public void setDateReserveBegin(Date dateReserveBegin) {
+        this.dateReserveBegin = dateReserveBegin;
+    }
+
+    public Date getDateReserveEnd() {
+        return dateReserveEnd;
+    }
+
+    public void setDateReserveEnd(Date dateReserveEnd) {
+        this.dateReserveEnd = dateReserveEnd;
     }
 }
