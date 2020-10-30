@@ -22,20 +22,7 @@ public class ActorService {
         return actorRepository.save(actor);
     }
 
-    public Actor reservationDates(Actor actor, int id) {
-        var inicial = actor.getDateReserveBegin();
-        var end = actor.getDateReserveEnd();
-        var dates = actor.datas(inicial, end);
-        return (Actor) actorRepository.findById(id).map(a -> {
-            if (a.getReservations().contains(inicial) || a.getReservations().contains(end)) {
-                throw new IllegalArgumentException("Data indisponivel");
-            }
 
-            a.setReservations(incrementList(a.getReservations(), dates));
-            return actorRepository.save(a);
-
-        }).orElseThrow();
-    }
 
     public List<Actor> listAllActors() {
         return (List<Actor>) actorRepository.findAll();
@@ -45,17 +32,7 @@ public class ActorService {
         return actorRepository.findById(id).orElseThrow();
     }
 
-    public List<Date> incrementList(List<Date> currentDates, List<Date> newDates) {
-        return Stream.of(currentDates, newDates)
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
 
-    }
 
-    public List<Date> reserves(int id){
-        return actorRepository.findById(id).map(r ->{
-            return r.getReservations();
-        }).orElseThrow();
-    }
 
 }

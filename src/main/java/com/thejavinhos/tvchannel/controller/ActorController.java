@@ -28,18 +28,12 @@ public class ActorController {
         return ResponseEntity.ok(actorService.listAllActors());
     }
 
-    @PutMapping("/reserveActor/{id}")
-    public ResponseEntity<Actor> reservationActor(@PathVariable int id, @RequestBody Actor actor){
-        return ResponseEntity.ok(actorService.reservationDates(actor, id));
-    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Actor> listNyId(@PathVariable int id){
         return ResponseEntity.ok(actorService.listActor(id));
     }
 
-    @GetMapping("/reserves/{id}")
-    public ResponseEntity<List<Date>> listReservers(@PathVariable int id){
-        return  ResponseEntity.ok(actorService.reserves(id));
-    }
+
 }

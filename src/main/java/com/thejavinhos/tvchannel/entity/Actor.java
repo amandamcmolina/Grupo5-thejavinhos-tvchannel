@@ -36,29 +36,7 @@ public class Actor {
     @Column(name = "genre_work")
     private String genreWork;
 
-    @ElementCollection
-    @Column(name = "reservations")
-    private List<Date> reservations = new ArrayList();
 
-    private Date dateReserveBegin;
-    private Date dateReserveEnd;
-
-    private int reservationTotal = 0;
-
-
-
-
-    public List<Date> datas(Date dataInicial, Date dataFinal){
-        List<Date> datas = new ArrayList<Date>();
-        datas.add(dataInicial);
-        Calendar inicio = Calendar.getInstance();
-        inicio.setTime(dataInicial);
-        while(inicio.getTime().before(dataFinal)){
-            inicio.add(Calendar.DAY_OF_YEAR,1);
-            datas.add(inicio.getTime());
-        }
-        return datas;
-    }
 
 
 }
