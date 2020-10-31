@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -27,8 +28,12 @@ public class ActorController {
         return ResponseEntity.ok(actorService.listAllActors());
     }
 
-    @PutMapping("/reserveActor/{id}")
-    public ResponseEntity<Actor> reservationActor(@PathVariable int id, @RequestBody Actor actor){
-        return ResponseEntity.ok(actorService.reservationDates(actor, id));
+
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Actor> listNyId(@PathVariable int id){
+        return ResponseEntity.ok(actorService.listActor(id));
     }
+
+
 }

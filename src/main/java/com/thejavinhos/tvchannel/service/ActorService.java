@@ -6,33 +6,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
+import java.util.Collection;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Component
 public class ActorService {
 
     @Autowired
-    private  ActorRepository actorRepository;
+    private ActorRepository actorRepository;
 
     public Actor saveActor(Actor actor) {
-            return actorRepository.save(actor);
+        return actorRepository.save(actor);
     }
 
-    public Actor reservationDates(Actor actor, int id) {
-        var inicial = actor.getDateReserveBegin();
-        var end = actor.getDateReserveEnd();
-        var dates =  actor.datas(inicial,end);
-        return (Actor) actorRepository.findById(id).map(a ->{
-            if(a.getReservations().contains(inicial) || a.getReservations().contains(end)){
-                return "Indisponivel";
-            }
-            a.setReservations(dates);
-            return actorRepository.save(a);
 
-        }).orElseThrow();
-    }
 
     public List<Actor> listAllActors() {
         return (List<Actor>) actorRepository.findAll();
     }
+
+    public Actor listActor(int id) {
+        return actorRepository.findById(id).orElseThrow();
+    }
+
+
+
+
 }
