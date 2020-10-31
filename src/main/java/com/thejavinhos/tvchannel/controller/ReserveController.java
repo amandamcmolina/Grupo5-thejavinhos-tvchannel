@@ -23,18 +23,19 @@ public class ReserveController {
         return ResponseEntity.ok(reserveService.listAll());
     }
 
-    @GetMapping("/id")
-    private ResponseEntity <Reserve> listbyReservesById(@PathVariable int id){
-        return ResponseEntity.ok(reserveService.listById(id));
+    @GetMapping("/{id}")
+    private ResponseEntity<List<Reserve>> listbyReservesById(@PathVariable int id){
+        return ResponseEntity.ok(reserveService.ator(id));
+//        return ResponseEntity.ok();
     }
 
     @PostMapping
     private ResponseEntity<Reserve> create(@RequestBody Reserve reserve){
-        return  ResponseEntity.ok(reserveService.create(reserve));
+        return  ResponseEntity.ok(reserveService.createReserve(reserve));
     }
 
-   @PutMapping("/{id}")
-    public ResponseEntity<Reserve> reservationActor(@PathVariable int id, @RequestBody Reserve reserve){
-        return ResponseEntity.ok(reserveService.reservationDates(reserve, id));
-   }
+//   @PutMapping("/{id}")
+//    public ResponseEntity<Reserve> reservationActor(@PathVariable int id, @RequestBody Reserve reserve){
+//        return ResponseEntity.ok(reserveService.reservationDates(reserve, id));
+//   }
 }

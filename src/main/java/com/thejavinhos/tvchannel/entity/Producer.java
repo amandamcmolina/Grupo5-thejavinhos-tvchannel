@@ -23,6 +23,8 @@ public class Producer {
     @Column(name = "username")
     private String username;
 
+//    @OneToMany(mappedBy = "producer")
+//    private List<Reserve> reservas;
 
 
 

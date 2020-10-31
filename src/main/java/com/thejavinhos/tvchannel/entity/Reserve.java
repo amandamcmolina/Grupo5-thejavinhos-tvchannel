@@ -19,35 +19,26 @@ public class Reserve {
     @Column(name = "id")
     private int id;
 
+    @ManyToOne
+    @JoinColumn(name = "id_actor", referencedColumnName="id")
+    private Actor id_actor;//TODO: Verificar relacionamento
 
-    @JoinColumn(name = "actor_id", referencedColumnName = "id")
-    private int actor;
+    @ManyToOne
+    @JoinColumn(name="id_producer", referencedColumnName="id")
+    private Producer id_producer;
 
-
-    @JoinColumn(name = "producer_id", referencedColumnName = "id")
-    private int producer;
-
-    @ElementCollection
-    @Column(name = "reservations")
-    private List<Date> reservations = new ArrayList();
-
+    @Column(name = "date_reserve_begin")
     private Date dateReserveBegin;
+
+    @Column(name = "date_reserve_end")
     private Date dateReserveEnd;
 
-
-
-
-
-
-    public List<Date> datas(Date dataInicial, Date dataFinal){
-        List<Date> datas = new ArrayList<Date>();
-        datas.add(dataInicial);
-        Calendar inicio = Calendar.getInstance();
-        inicio.setTime(dataInicial);
-        while(inicio.getTime().before(dataFinal)){
-            inicio.add(Calendar.DAY_OF_YEAR,1);
-            datas.add(inicio.getTime());
-        }
-        return datas;
+    public Actor getId_actor() {
+        return id_actor;
     }
+
+    public Producer getId_producer() {
+        return id_producer;
+    }
+
 }

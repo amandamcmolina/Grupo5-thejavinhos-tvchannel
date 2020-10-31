@@ -36,6 +36,8 @@ public class Actor {
     @Column(name = "genre_work")
     private String genreWork;
 
+//    @OneToMany(mappedBy = "actor")
+//    private List<Reserve> reservas;
 
 
 
