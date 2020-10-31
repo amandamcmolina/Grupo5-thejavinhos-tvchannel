@@ -17,8 +17,8 @@ public class Actor extends User{
     @Column(name = "available")
     private boolean available;
 
-    @Column(name = "genrer_work")
-    private String genrerWork;
+    @Column(name = "genre_work")
+    private String genreWork;
 
     @Column(name = "is_admin")
     private boolean isAdmin = false;
@@ -51,12 +51,12 @@ public class Actor extends User{
         this.available = available;
     }
 
-    public String getGenrerWork() {
-        return genrerWork;
+    public String getGenreWork() {
+        return genreWork;
     }
 
-    public void setGenrerWork(String genreWork) {
-        this.genrerWork = genreWork;
+    public void setGenreWork(String genreWork) {
+        this.genreWork = genreWork;
     }
 
     public boolean isIsAdmin() {

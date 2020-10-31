@@ -1,6 +1,7 @@
 package com.thejavinhos.tvchannel.service;
 
 import com.thejavinhos.tvchannel.entity.Actor;
+import com.thejavinhos.tvchannel.entity.Reserve;
 import com.thejavinhos.tvchannel.repository.ActorRepository;
 import com.thejavinhos.tvchannel.repository.ReserveRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +25,9 @@ public class ActorService {
     private ReserveRepository reserveRepository;
 
     public Actor saveActor(Actor actor) {
-        if(actorRepository.findByUsername(actor.getUsername()) == null){
+        if (actorRepository.findByUsername(actor.getUsername()) == null) {
             return actorRepository.save(actor);
-        }else{
+        } else {
             throw new IllegalArgumentException("Actor already exists");
         }
     }
@@ -36,15 +37,18 @@ public class ActorService {
         return (List<Actor>) actorRepository.findAll();
     }
 
-    public Actor listActor(int id) {
-        return actorRepository.findById(id).orElseThrow();
+    public Actor listActor(String username) {
+        var actor = actorRepository.findByUsername(username);
+        return actor;
+//        List <Reserve> actorList= reserveRepository.findAllByActorId(actor.getId());
+//        return actorRepository.findById(id).orElseThrow();
     }
 
 
-    public List<Actor> searchActor(/*int quantity, String genreWork, Date begin, Double amount*/) {
+    public List<Actor> searchActor(int quantity, String genreWork, Date begin, Double amount) {
         var reserves = reserveRepository.findAll();
-      var actors = actorRepository.findAll();
-          /* var rc = reserves.stream()
+        var actors = actorRepository.findAll();
+        var rc = reserves.stream()
                 .filter(a -> !begin.before(a.getDateReserveBegin()) && !begin.after(a.getDateReserveEnd()))
                 .collect(Collectors.toList());
         var ac = new ArrayList();
@@ -52,11 +56,11 @@ public class ActorService {
             ac.add(reserve.getActor());
         });
         actors.removeAll(ac);
-        var ag = actors.stream().filter(actor -> actor.getGenrerWork() == genreWork).collect(Collectors.toList());
+        var ag = actors.stream().filter(actor -> actor.getGenreWork() == genreWork).collect(Collectors.toList());
         var lista = new ArrayList();
-        for(var i = 0; i < quantity; i++){
+        for (var i = 0; i < quantity; i++) {
             lista.add(ag.get(i));
-        }*/
-        return actors;
+        }
+        return lista;
     }
 }

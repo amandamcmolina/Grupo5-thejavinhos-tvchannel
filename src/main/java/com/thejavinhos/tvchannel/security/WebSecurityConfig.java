@@ -42,10 +42,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception{
         http.csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/user").permitAll()//limitar os acessos por aqui
-                .antMatchers(HttpMethod.POST, "/auth").permitAll()//limitar os acessos por aqui
-                .antMatchers(HttpMethod.POST, "/actors").permitAll()//limitar os acessos por aqui
-                .antMatchers(HttpMethod.POST, "/producer").permitAll()//limitar os acessos por aqui
-                .antMatchers(HttpMethod.POST, "/search").permitAll()//limitar os acessos por aqui
+                .antMatchers(HttpMethod.POST, "/auth").permitAll()
+                .antMatchers(HttpMethod.POST, "/actors").permitAll()
+                .antMatchers(HttpMethod.POST, "/producer").permitAll()
+                .antMatchers(HttpMethod.GET, "/actors/search").permitAll()
                 .antMatchers("/h2/**").permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
