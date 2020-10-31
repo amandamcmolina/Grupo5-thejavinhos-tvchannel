@@ -1,12 +1,6 @@
 package com.thejavinhos.tvchannel.entity;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 //@Data
 //@EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -23,8 +17,8 @@ public class Actor extends User{
     @Column(name = "available")
     private boolean available;
 
-    @Column(name = "gender_work")
-    private String genderWork;
+    @Column(name = "genrer_work")
+    private String genrerWork;
 
     @Column(name = "is_admin")
     private boolean isAdmin = false;
@@ -57,12 +51,12 @@ public class Actor extends User{
         this.available = available;
     }
 
-    public String getGenderWork() {
-        return genderWork;
+    public String getGenrerWork() {
+        return genrerWork;
     }
 
-    public void setGenderWork(String genreWork) {
-        this.genderWork = genreWork;
+    public void setGenrerWork(String genreWork) {
+        this.genrerWork = genreWork;
     }
 
     public boolean isIsAdmin() {
