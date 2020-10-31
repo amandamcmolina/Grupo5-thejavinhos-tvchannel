@@ -52,8 +52,8 @@ public class ReserveService {
 
     public Reserve buildReserve(Actor actor, Producer producer, Date begin, Date end){
         Reserve newReserve = new Reserve();
-        newReserve.setId_actor(actor);
-        newReserve.setId_producer(producer);
+        newReserve.setActor(actor);
+        newReserve.setProducer(producer);
         newReserve.setDateReserveBegin(begin);
         newReserve.setDateReserveEnd(end);
 

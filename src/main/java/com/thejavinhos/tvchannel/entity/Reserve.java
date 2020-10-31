@@ -33,11 +33,11 @@ public class Reserve {
     @Column(name = "date_reserve_end")
     private Date dateReserveEnd;
 
-    public Actor getId_actor() {
+    public Actor getActor() {
         return actor;
     }
 
-    public Producer getId_producer() {
+    public Producer getProducer() {
         return producer;
     }
 
@@ -49,12 +49,12 @@ public class Reserve {
         this.id = id;
     }
 
-    public void setId_actor(Actor id_actor) {
-        this.actor = id_actor;
+    public void setActor(Actor actor) {
+        this.actor = actor;
     }
 
-    public void setId_producer(Producer id_producer) {
-        this.producer = id_producer;
+    public void setProducer(Producer producer) {
+        this.producer = producer;
     }
 
     public Date getDateReserveBegin() {
