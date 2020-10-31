@@ -37,11 +37,10 @@ public class ActorService {
         return (List<Actor>) actorRepository.findAll();
     }
 
-    public Actor listActor(String username) {
+    public List<Reserve> reserveList(String username) {
         var actor = actorRepository.findByUsername(username);
-        return actor;
-//        List <Reserve> actorList= reserveRepository.findAllByActorId(actor.getId());
-//        return actorRepository.findById(id).orElseThrow();
+        List <Reserve> actorList= reserveRepository.findAllByActorId(actor.getId());
+        return actorList;
     }
 
 

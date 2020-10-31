@@ -1,6 +1,7 @@
 package com.thejavinhos.tvchannel.controller;
 
 import com.thejavinhos.tvchannel.entity.Actor;
+import com.thejavinhos.tvchannel.entity.Reserve;
 import com.thejavinhos.tvchannel.service.ActorService;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -33,8 +34,8 @@ ActorController {
 
 
   @GetMapping("/{username}")
-  public ResponseEntity<Actor> listById(@PathVariable String username) {
-    return ResponseEntity.ok(actorService.listActor(username));
+  public ResponseEntity<List<Reserve>> listById(@PathVariable String username) {
+    return ResponseEntity.ok(actorService.reserveList(username));
   }
 
   @GetMapping("/search")
