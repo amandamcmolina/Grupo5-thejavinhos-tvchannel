@@ -1,9 +1,16 @@
 package com.thejavinhos.tvchannel.repository;
 
 import com.thejavinhos.tvchannel.entity.Actor;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 
-public interface ActorRepository extends CrudRepository<Actor, Integer> {
+import java.util.Date;
+import java.util.List;
+
+public interface ActorRepository extends JpaRepository<Actor, Integer> {
 
     Actor findByUsername(String username);
+
+
+
 }

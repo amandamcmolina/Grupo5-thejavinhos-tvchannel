@@ -12,7 +12,8 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/actors")
-public class ActorController {
+public class
+ActorController {
 
     @Autowired
     private ActorService actorService;
@@ -31,8 +32,14 @@ public class ActorController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<Actor> listNyId(@PathVariable int id){
+    public ResponseEntity<Actor> listById(@PathVariable int id){
         return ResponseEntity.ok(actorService.listActor(id));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Actor>> search(/*@RequestParam("quantity") int quantity, @RequestParam("genreWork") String genreWork, @RequestParam("begin") Date begin, @RequestParam("amount") Double amount*/) {
+        return ResponseEntity.ok(actorService.searchActor(/*quantity, genreWork, begin, amount*/));
+
     }
 
 
