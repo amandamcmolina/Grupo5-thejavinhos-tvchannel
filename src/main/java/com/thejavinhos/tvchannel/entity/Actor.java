@@ -11,21 +11,11 @@ import lombok.EqualsAndHashCode;
 //@Data
 //@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-public class Actor {
+public class Actor extends User{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
 
-    @Column(name = "name")
-    private String name;
     @Column(name = "gender")
     private String gender;
-    @Column(name = "password")
-    private int password;
-    @Column(name = "username")
-    private String username;
 
     @Column(name = "payment")
     private double payment;
@@ -33,28 +23,14 @@ public class Actor {
     @Column(name = "available")
     private boolean available;
 
-    @Column(name = "genre_work")
-    private String genreWork;
+    @Column(name = "gender_work")
+    private String genderWork;
 
-//    @OneToMany(mappedBy = "actor")
-//    private List<Reserve> reservas;
+    @Column(name = "is_admin")
+    private boolean isAdmin = false;
 
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getGender() {
         return gender;
@@ -64,21 +40,6 @@ public class Actor {
         this.gender = gender;
     }
 
-    public int getPassword() {
-        return password;
-    }
-
-    public void setPassword(int password) {
-        this.password = password;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public double getPayment() {
         return payment;
@@ -96,11 +57,19 @@ public class Actor {
         this.available = available;
     }
 
-    public String getGenreWork() {
-        return genreWork;
+    public String getGenderWork() {
+        return genderWork;
     }
 
-    public void setGenreWork(String genreWork) {
-        this.genreWork = genreWork;
+    public void setGenderWork(String genreWork) {
+        this.genderWork = genreWork;
+    }
+
+    public boolean isIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIs(boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 }

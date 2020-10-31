@@ -45,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()//limitar os acessos por aqui
                 .antMatchers(HttpMethod.POST, "/actors").permitAll()//limitar os acessos por aqui
                 .antMatchers(HttpMethod.POST, "/producer").permitAll()//limitar os acessos por aqui
-                .antMatchers("/h2-tv-teste/**").permitAll()
+                .antMatchers("/h2/**").permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().addFilterBefore(new  AutenticacaoViaTokenFilter(tokenService, userRepository), UsernamePasswordAuthenticationFilter.class);
