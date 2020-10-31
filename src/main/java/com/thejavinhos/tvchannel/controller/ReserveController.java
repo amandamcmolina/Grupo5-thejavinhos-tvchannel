@@ -2,6 +2,7 @@ package com.thejavinhos.tvchannel.controller;
 
 import com.thejavinhos.tvchannel.entity.Actor;
 import com.thejavinhos.tvchannel.entity.Reserve;
+import com.thejavinhos.tvchannel.entity.ReserveRequest;
 import com.thejavinhos.tvchannel.service.ActorService;
 import com.thejavinhos.tvchannel.service.ReserveService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,19 +19,19 @@ public class ReserveController {
     @Autowired
     private ReserveService reserveService;
 
-    @GetMapping
-    private ResponseEntity <List<Reserve>> list(){
-        return ResponseEntity.ok(reserveService.listAll());
-    }
+//    @GetMapping
+//    private ResponseEntity <List<Reserve>> list(){
+//        return ResponseEntity.ok(reserveService.listAll());
+//    }
 
-    @GetMapping("/{id}")
-    private ResponseEntity<List<Reserve>> listbyReservesById(@PathVariable int id){
-        return ResponseEntity.ok(reserveService.ator(id));
-//        return ResponseEntity.ok();
-    }
+//    @GetMapping("/{id}")
+//    private ResponseEntity<List<Reserve>> listbyReservesById(@PathVariable int id){
+//        return ResponseEntity.ok(reserveService.ator(id));
+////        return ResponseEntity.ok();
+//    }
 
     @PostMapping
-    private ResponseEntity<Reserve> create(@RequestBody Reserve reserve){
+    private ResponseEntity<Reserve> create(@RequestBody ReserveRequest reserve){
         return  ResponseEntity.ok(reserveService.createReserve(reserve));
     }
 
