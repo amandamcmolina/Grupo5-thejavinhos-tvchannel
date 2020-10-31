@@ -19,7 +19,11 @@ public class ActorService {
     private ActorRepository actorRepository;
 
     public Actor saveActor(Actor actor) {
-        return actorRepository.save(actor);
+        if(actorRepository.findByUsername(actor.getUsername()) == null){
+            return actorRepository.save(actor);
+        }else{
+            throw new IllegalArgumentException("Actor already exists");
+        }
     }
 
 

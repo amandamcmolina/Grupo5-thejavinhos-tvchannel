@@ -13,8 +13,10 @@ public class ProducerService {
     private ProducerRepository producerRepository;
 
     public Producer saveProducer(Producer producer) {
-        return producerRepository.save(producer);
-
-
+        if(producerRepository.findByUsername(producer.getUsername()) == null){
+            return producerRepository.save(producer);
+        }else{
+            throw new IllegalArgumentException("Producer already exists");
+        }
     }
 }
