@@ -47,18 +47,22 @@ public class ActorService {
     public List<Actor> searchActor(int quantity, String genreWork, Date begin, Double amount) {
         var reserves = reserveRepository.findAll();
         var actors = actorRepository.findAll();
+
         var rc = reserves.stream()
                 .filter(a -> !begin.before(a.getDateReserveBegin()) && !begin.after(a.getDateReserveEnd()))
                 .collect(Collectors.toList());
+      System.out.println(rc);
         var ac = new ArrayList();
         rc.forEach(reserve -> {
             ac.add(reserve.getActor());
         });
         actors.removeAll(ac);
-        var ag = actors.stream().filter(actor -> actor.getGenreWork() == genreWork).collect(Collectors.toList());
+
+        var ag = actors.stream().filter(actor -> actor.getGenreWork().contains(genreWork)).collect(Collectors.toList());
         var lista = new ArrayList();
         for (var i = 0; i < quantity; i++) {
-            lista.add(ag.get(i));
+
+              lista.add(ag.get(i));//:TODO Condicional pela quantidade / orçamento
         }
         return lista;
     }

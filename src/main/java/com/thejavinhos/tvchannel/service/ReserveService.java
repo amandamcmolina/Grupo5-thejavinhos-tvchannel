@@ -35,16 +35,20 @@ public class ReserveService {
         var actor = actorRepository.findByUsername(reserve.getUsernameActor());
         var producer = producerRepository.findByUsername(reserve.getUsernameProducer());
         List <Reserve> actorList= reserveRepository.findAllByActorId(actor.getId());
-        int total = 0;
         for(Reserve reserva: actorList){
-            Date beginReservaAtual = reserva.getDateReserveBegin();
-            Date endReservaAtual = reserva.getDateReserveEnd();
-            if(beginReservaAtual.after(begin)  && beginReservaAtual.before(end) && endReservaAtual.after(begin) && endReservaAtual.before(end)){
-                total += 1;
+            Date beginAtual = reserva.getDateReserveBegin();
+            Date endAtual = reserva.getDateReserveEnd();
+
+          System.out.println(beginAtual.compareTo(begin));
+          System.out.println(begin.before(beginAtual));
+
+            if(
+                 begin.before(beginAtual) && end.after(endAtual)
+              || begin.after(beginAtual) && begin.before(endAtual)
+              || end.after(beginAtual) && end.before(endAtual)
+              || beginAtual.compareTo(begin) == 0 || beginAtual.compareTo(end) == 0){
+              throw new IllegalArgumentException("The reserve already exists");
             }
-        }
-        if(!actorList.isEmpty() || total >=1){
-            throw new IllegalArgumentException("The reserve already exists");
         }
 
         return reserveRepository.save(buildReserve(actor, producer, begin, end));

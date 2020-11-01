@@ -35,8 +35,4 @@ public class ReserveController {
         return  ResponseEntity.ok(reserveService.createReserve(reserve));
     }
 
-//   @PutMapping("/{id}")
-//    public ResponseEntity<Reserve> reservationActor(@PathVariable int id, @RequestBody Reserve reserve){
-//        return ResponseEntity.ok(reserveService.reservationDates(reserve, id));
-//   }
 }
