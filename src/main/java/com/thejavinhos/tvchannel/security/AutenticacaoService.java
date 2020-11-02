@@ -40,7 +40,7 @@ public class AutenticacaoService implements UserDetailsService {
           return userUm;
         }
 
-        
+
         throw new UsernameNotFoundException("Dados inválidos");
 
 
