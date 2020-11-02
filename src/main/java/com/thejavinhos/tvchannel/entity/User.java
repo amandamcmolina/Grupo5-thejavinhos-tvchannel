@@ -33,11 +33,20 @@ public class User implements UserDetails {
                                       referencedColumnName = "id",
                                       nullable = false,
                                       updatable = false),
-            inverseJoinColumns = @JoinColumn(name = "perfil_id",
-                                      referencedColumnName = "id",
+            inverseJoinColumns = @JoinColumn(name = "role",
+                                      referencedColumnName = "role",
                                       nullable = false,
                                       updatable = false))
     private List<Perfil> perfis = new ArrayList<>();
+
+    //teste
+    public User(){
+
+    }
+
+    public User(String username, String password, boolean b, boolean b1, boolean b2, boolean b3, Collection<? extends GrantedAuthority> authorities) {
+    }
+    //teste
 
     public Integer getId() {
         return id;

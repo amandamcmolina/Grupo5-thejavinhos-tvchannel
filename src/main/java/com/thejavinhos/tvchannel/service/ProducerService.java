@@ -23,7 +23,7 @@ public class ProducerService {
     public Producer saveProducer(Producer producer) {
         if(producerRepository.findByUsername(producer.getUsername()) == null){
           List<Perfil> roles = new ArrayList<>();
-          Optional<Perfil> byId = perfilRepository.findById(1);
+          Optional<Perfil> byId = Optional.ofNullable(perfilRepository.findByRole("ROLE_ADMIN"));
           perfilRepository.findAll();
           System.out.println(perfilRepository.findAll());
           if (byId.isPresent()) {

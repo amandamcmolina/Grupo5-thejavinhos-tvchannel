@@ -33,7 +33,7 @@ public class ActorService {
     public Actor saveActor(Actor actor) {
         if (actorRepository.findByUsername(actor.getUsername()) == null) {
           List<Perfil> roles = new ArrayList<>();
-          Optional<Perfil> byId = perfilRepository.findById(2);
+          Optional<Perfil> byId = Optional.ofNullable(perfilRepository.findByRole("ROLE_USER"));
           perfilRepository.findAll();
           System.out.println(perfilRepository.findAll());
           if (byId.isPresent()) {
