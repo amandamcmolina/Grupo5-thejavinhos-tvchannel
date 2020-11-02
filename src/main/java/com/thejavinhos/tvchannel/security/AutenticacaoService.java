@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 //@Transactional //teste
 //@Component
 @Service
-@Transactional
 public class AutenticacaoService implements UserDetailsService {
 
     @Autowired
@@ -39,6 +38,8 @@ public class AutenticacaoService implements UserDetailsService {
           userUm.setAuthorities(user.getAuthorities());
           return userUm;
         }
+
+        
         throw new UsernameNotFoundException("Dados inválidos");
 
 

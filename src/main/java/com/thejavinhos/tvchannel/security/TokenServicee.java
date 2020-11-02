@@ -21,6 +21,7 @@ public class TokenServicee {
     private String secret;
 
     public String gerarToken(Authentication authentication) {
+//        MyUserDetails myUserDetails = (MyUserDetails) authentication.getPrincipal();
         MyUserDetails myUserDetails = (MyUserDetails) authentication.getPrincipal();
         System.out.println("authorities " + myUserDetails.getAuthorities());
         Date hoje = new Date();
