@@ -15,24 +15,12 @@ import javax.persistence.Id;
 @Entity
 public class Perfil implements GrantedAuthority, Serializable {
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Integer id;
-
     @Id
     private String role;
 
-    @ManyToMany(mappedBy = "perfis", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "perfis", fetch = FetchType.EAGER)
     private List<User> users = new ArrayList<>();
 
-
-//    public Integer getId() {
-//        return id;
-//    }
-//
-//    public void setId(Integer id) {
-//        this.id = id;
-//    }
 
     public String getRole() {
       return role;
@@ -43,7 +31,7 @@ public class Perfil implements GrantedAuthority, Serializable {
     }
 
     @Override
-      public String getAuthority() {
-          return role;
-      }
+    public String getAuthority() {
+        return role;
+    }
 }

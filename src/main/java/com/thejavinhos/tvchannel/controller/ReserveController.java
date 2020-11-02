@@ -1,6 +1,7 @@
 package com.thejavinhos.tvchannel.controller;
 
 import com.thejavinhos.tvchannel.entity.Actor;
+import com.thejavinhos.tvchannel.entity.MyUserDetails;
 import com.thejavinhos.tvchannel.entity.Reserve;
 import com.thejavinhos.tvchannel.entity.ReserveRequest;
 import com.thejavinhos.tvchannel.service.ActorService;
@@ -9,6 +10,9 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,7 +39,14 @@ public class ReserveController {
     @PostMapping
     @CacheEvict(value = "reservas", allEntries = true)
     private ResponseEntity<Reserve> create(@RequestBody ReserveRequest reserve){
-        return  ResponseEntity.ok(reserveService.createReserve(reserve));
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null &&
+            auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))){
+              return  ResponseEntity.ok(reserveService.createReserve(reserve));
+          }
+
+        throw new IllegalArgumentException("You are not a admin");
+
     }
 
 }

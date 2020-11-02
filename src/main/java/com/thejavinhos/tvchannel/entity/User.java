@@ -38,22 +38,7 @@ public class User implements UserDetails{
                                       updatable = false))
     private List<Perfil> perfis = new ArrayList<>();
 
-//  public User(String username, String password, Collection<? extends GrantedAuthority> authorities) {
-//
-//  }
-//
-//  //teste
-//    public User(){
-//
-//    }
 
-//    public User(String username, String password, Collection<? extends GrantedAuthority> authorities) {
-//      this.username = username;
-//      this.password = password;
-//      thi
-//    }
-
-  //teste
 
     public Integer getId() {
         return id;
@@ -64,11 +49,12 @@ public class User implements UserDetails{
     }
 
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.perfis;
     }
+
+
 
     @Override
     public String getPassword() {
@@ -107,7 +93,13 @@ public class User implements UserDetails{
         this.password = new BCryptPasswordEncoder().encode(password);
     }
 
-  public void setPerfis(List<Perfil> perfis) {
+    public void setPerfis(List<Perfil> perfis) {
     this.perfis = perfis;
   }
+
+    public List<Perfil> getPerfis() {
+      return perfis;
+    }
+
+
 }
