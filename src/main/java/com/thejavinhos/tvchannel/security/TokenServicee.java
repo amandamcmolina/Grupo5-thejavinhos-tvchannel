@@ -1,5 +1,6 @@
 package com.thejavinhos.tvchannel.security;
 
+import com.thejavinhos.tvchannel.entity.MyUserDetails;
 import com.thejavinhos.tvchannel.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -20,12 +21,13 @@ public class TokenServicee {
     private String secret;
 
     public String gerarToken(Authentication authentication) {
-        User logado = (User) authentication.getPrincipal();
+        MyUserDetails myUserDetails = (MyUserDetails) authentication.getPrincipal();
+        System.out.println("authorities " + myUserDetails.getAuthorities());
         Date hoje = new Date();
         Date dataExpiracao = new Date(hoje.getTime() + Long.parseLong(expiration));
         return Jwts.builder()
                 .setIssuer("API da TV")
-                .setSubject(logado.getId().toString())
+                .setSubject(myUserDetails.getId().toString())
                 .setIssuedAt(hoje)
                 .setExpiration(dataExpiracao)
                 .signWith(SignatureAlgorithm.HS256 ,secret)

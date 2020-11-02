@@ -2,6 +2,7 @@ package com.thejavinhos.tvchannel.controller;
 
 import com.thejavinhos.tvchannel.entity.LoginForm;
 import com.thejavinhos.tvchannel.security.TokenServicee;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,6 +27,7 @@ public class AutenticacaoController {
     private TokenServicee tokenService;
 
     @PostMapping
+    @Transactional
     public ResponseEntity<TokenDto> autenticar(@RequestBody @Validated LoginForm form){
         UsernamePasswordAuthenticationToken dadosLogin = form.converter();
 

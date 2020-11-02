@@ -1,5 +1,6 @@
 package com.thejavinhos.tvchannel.entity;
 
+import java.io.Serializable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -11,14 +12,12 @@ import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public class User implements UserDetails {
+public class User implements UserDetails{
     @Id
     @GeneratedValue
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "name")
-    private String name;
 
     @Column(name = "username")
     private String username;
@@ -26,9 +25,35 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @ElementCollection
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "users_perfis",
+            joinColumns = @JoinColumn(name = "user_id",
+                                      referencedColumnName = "id",
+                                      nullable = false,
+                                      updatable = false),
+            inverseJoinColumns = @JoinColumn(name = "role",
+                                      referencedColumnName = "role",
+                                      nullable = false,
+                                      updatable = false))
     private List<Perfil> perfis = new ArrayList<>();
+
+//  public User(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+//
+//  }
+//
+//  //teste
+//    public User(){
+//
+//    }
+
+//    public User(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+//      this.username = username;
+//      this.password = password;
+//      thi
+//    }
+
+  //teste
 
     public Integer getId() {
         return id;
@@ -38,13 +63,7 @@ public class User implements UserDetails {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -87,4 +106,8 @@ public class User implements UserDetails {
     public void setPassword(String password) {
         this.password = new BCryptPasswordEncoder().encode(password);
     }
+
+  public void setPerfis(List<Perfil> perfis) {
+    this.perfis = perfis;
+  }
 }

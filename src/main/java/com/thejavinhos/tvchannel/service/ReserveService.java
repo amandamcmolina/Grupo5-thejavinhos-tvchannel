@@ -30,6 +30,9 @@ public class ReserveService {
 
 
     public Reserve createReserve(ReserveRequest reserve){
+        if(actorRepository.findByUsername(reserve.getUsernameActor()) == null || producerRepository.findByUsername(reserve.getUsernameProducer()) == null){
+          throw new IllegalArgumentException("You need to pass a valid user or produce");
+        }
         Date begin = reserve.getBegin();
         Date end = reserve.getEnd();
         var actor = actorRepository.findByUsername(reserve.getUsernameActor());
@@ -73,9 +76,9 @@ public class ReserveService {
 //    }
 
 
-//    public List<Reserve> listAll(){
-//        return (List<Reserve>) reserveRepository.findAll();
-//    }
+    public List<Reserve> listAll(){
+        return (List<Reserve>) reserveRepository.findAll();
+    }
 
 //    public Reserve listById(int id){
 //        return reserveRepository.findById(id).orElseThrow();
