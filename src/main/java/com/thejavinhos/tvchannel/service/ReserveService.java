@@ -49,7 +49,8 @@ public class ReserveService {
                  begin.before(beginAtual) && end.after(endAtual)
               || begin.after(beginAtual) && begin.before(endAtual)
               || end.after(beginAtual) && end.before(endAtual)
-              || beginAtual.compareTo(begin) == 0 || beginAtual.compareTo(end) == 0){
+              || beginAtual.compareTo(begin) == 0 || beginAtual.compareTo(end) == 0
+              || begin.compareTo(endAtual) == 0 || end.compareTo(beginAtual) == 0){
               throw new IllegalArgumentException("The reserve already exists");
             }
         }

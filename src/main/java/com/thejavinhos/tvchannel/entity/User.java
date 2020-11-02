@@ -39,7 +39,6 @@ public class User implements UserDetails{
     private List<Perfil> perfis = new ArrayList<>();
 
 
-
     public Integer getId() {
         return id;
     }
@@ -47,6 +46,7 @@ public class User implements UserDetails{
     public void setId(Integer id) {
         this.id = id;
     }
+
 
 
     @Override
@@ -92,6 +92,7 @@ public class User implements UserDetails{
     public void setPassword(String password) {
         this.password = new BCryptPasswordEncoder().encode(password);
     }
+
 
     public void setPerfis(List<Perfil> perfis) {
     this.perfis = perfis;

@@ -56,9 +56,10 @@ public class ActorService {
     }
 
 
-    public List<Actor> searchActor(int quantity, String genreWork, Date begin, Double amount) {
+   public List<Actor> searchActor(int quantity, String genreWork, Date begin, Double amount) {
         var reserves = reserveRepository.findAll();
         var actors = actorRepository.findAll();
+        ;
 
         var rc = reserves.stream()
                 .filter(a -> !begin.before(a.getDateReserveBegin()) && !begin.after(a.getDateReserveEnd()))
@@ -71,11 +72,30 @@ public class ActorService {
         actors.removeAll(ac);
 
         var ag = actors.stream().filter(actor -> actor.getGenreWork().contains(genreWork)).collect(Collectors.toList());
-        var lista = new ArrayList();
-        for (var i = 0; i < quantity; i++) {
 
-              lista.add(ag.get(i));//:TODO Condicional pela quantidade / orçamento
+        var lista = new ArrayList();
+
+      for (var i = 0; i < quantity; i++) {
+        if(quantity <= ag.size()) {
+          ag.removeIf(a -> a.getPayment() > amount );
+
+        }else
+        {
+          throw new IndexOutOfBoundsException("There are no actors available in this amount");
         }
-        return lista;
+
+      }
+
+        for (var i = 0; i < quantity; i++) {
+          if(quantity <= ag.size()) {
+            lista.add(ag.get(i));//
+
+          }else
+          {
+            throw new IndexOutOfBoundsException("There are no more actors available");
+          }
+
+        }
+      return lista;
     }
 }
