@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 //@Transactional //teste
 //@Component
 @Service
-@Transactional
 public class AutenticacaoService implements UserDetailsService {
 
     @Autowired
@@ -31,6 +30,7 @@ public class AutenticacaoService implements UserDetailsService {
         User user = userRepository.findByUsername(username);
         if(user != null){
 //            return user;
+
 //          return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), true,
 //              true, true, true, user.getAuthorities());
           MyUserDetails userUm = new MyUserDetails();
