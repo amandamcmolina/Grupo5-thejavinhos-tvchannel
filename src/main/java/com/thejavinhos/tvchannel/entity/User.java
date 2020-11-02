@@ -26,8 +26,17 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @ElementCollection
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "users_perfis",
+            joinColumns = @JoinColumn(name = "user_id",
+                                      referencedColumnName = "id",
+                                      nullable = false,
+                                      updatable = false),
+            inverseJoinColumns = @JoinColumn(name = "perfil_id",
+                                      referencedColumnName = "id",
+                                      nullable = false,
+                                      updatable = false))
     private List<Perfil> perfis = new ArrayList<>();
 
     public Integer getId() {
@@ -87,4 +96,8 @@ public class User implements UserDetails {
     public void setPassword(String password) {
         this.password = new BCryptPasswordEncoder().encode(password);
     }
+
+  public void setPerfis(List<Perfil> perfis) {
+    this.perfis = perfis;
+  }
 }
