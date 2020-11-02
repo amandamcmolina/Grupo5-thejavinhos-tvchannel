@@ -17,6 +17,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -45,8 +47,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
                 .antMatchers(HttpMethod.POST, "/actors").permitAll()
                 .antMatchers(HttpMethod.POST, "/producer").permitAll()
-//                .antMatchers(HttpMethod.POST, "/create").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/actors/search").permitAll()
+                .antMatchers(HttpMethod.POST, "/create").hasRole("ADMIN")
+//                .antMatchers(HttpMethod.GET, "/actors/search").permitAll()
                 .antMatchers("/h2/**").permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -57,17 +59,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-    //Configurações de autenticao ->  controle de acesso
+    //Configurações de autenticacao ->  controle de acesso
     @Override
-//    @Autowired
     protected void configure(AuthenticationManagerBuilder auth) throws Exception{
         auth.userDetailsService(autenticacaoService).passwordEncoder(new BCryptPasswordEncoder());
-//                .passwordEncoder(new BCryptPasswordEncoder());
     }
+
 
     //requisicoes de recursos estaticos(js, css, imagens)
     @Override
     public void configure(WebSecurity web) throws Exception{
-//        web.ignoring().antMatchers("/materialize/**", "/style/*");
+      //
     }
 }

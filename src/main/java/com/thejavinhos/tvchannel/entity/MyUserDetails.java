@@ -1,55 +1,69 @@
 package com.thejavinhos.tvchannel.entity;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class MyUserDetails implements UserDetails {
 
-  private String username;
-  private String password;
-  private boolean active;
-  private Collection<GrantedAuthority> authorities;
+  private User user;
+  private Collection<? extends GrantedAuthority> authorities = null;
+  private Integer id;
 
-  public MyUserDetails(User user){
-    this.username = user.getUsername();
-    this.password = user.getPassword();
-//    this.authorities = user.getAuthorities();
+
+  public void setUser(User user) {
+    this.user = user;
+  }
+
+  public Integer getId() {
+    return user.getId();
+  }
+
+  public void setId(Integer id) {
+    this.id = id;
   }
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return authorities;
+    return user.getAuthorities();
+  }
+
+  public void setAuthorities(Collection<? extends GrantedAuthority> authorities)
+  {
+    this.authorities=authorities;
   }
 
   @Override
   public String getPassword() {
-    return null;
+    return user.getPassword();
   }
 
   @Override
   public String getUsername() {
-    return null;
+    return user.getUsername();
   }
 
   @Override
   public boolean isAccountNonExpired() {
-    return false;
+    return true;
   }
 
   @Override
   public boolean isAccountNonLocked() {
-    return false;
+    return true;
   }
 
   @Override
   public boolean isCredentialsNonExpired() {
-    return false;
+    return true;
   }
 
   @Override
   public boolean isEnabled() {
-    return false;
+    return true;
   }
 }

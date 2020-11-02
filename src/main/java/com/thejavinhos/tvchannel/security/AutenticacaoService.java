@@ -1,19 +1,25 @@
 package com.thejavinhos.tvchannel.security;
 
+import com.thejavinhos.tvchannel.entity.MyUserDetails;
+import com.thejavinhos.tvchannel.entity.Perfil;
 import com.thejavinhos.tvchannel.entity.User;
 import com.thejavinhos.tvchannel.repository.UserRepository;
+import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
-//import org.springframework.security.core.userdetails.User; Não tem mais essa classe?
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
+import org.springframework.stereotype.Service;
 
-@Component
-@Transactional //teste
+
+//@Transactional //teste
+//@Component
+@Service
+@Transactional
 public class AutenticacaoService implements UserDetailsService {
 
     @Autowired
@@ -22,13 +28,19 @@ public class AutenticacaoService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> user = userRepository.findByUsername(username);
-        if(user.isPresent()){
-            return user.get();
+        User user = userRepository.findByUsername(username);
+        if(user != null){
+//            return user;
+//          return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), true,
+//              true, true, true, user.getAuthorities());
+          MyUserDetails userUm = new MyUserDetails();
+          userUm.setUser(user);
+          userUm.setId(user.getId());
+          userUm.setAuthorities(user.getAuthorities());
+          return userUm;
         }
-//        if(user.isPresent()){
-//            return new User(user.get().getUsername(), user.get().getPassword(), true, true, true, true, user.get().getAuthorities());
-//        }
         throw new UsernameNotFoundException("Dados inválidos");
+
+
     }
 }

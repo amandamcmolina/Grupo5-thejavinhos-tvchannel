@@ -1,5 +1,6 @@
 package com.thejavinhos.tvchannel.entity;
 
+import java.io.Serializable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -11,14 +12,12 @@ import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public class User implements UserDetails {
+public class User implements UserDetails{
     @Id
     @GeneratedValue
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "name")
-    private String name;
 
     @Column(name = "username")
     private String username;
@@ -39,14 +38,22 @@ public class User implements UserDetails {
                                       updatable = false))
     private List<Perfil> perfis = new ArrayList<>();
 
-    //teste
-    public User(){
+//  public User(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+//
+//  }
+//
+//  //teste
+//    public User(){
+//
+//    }
 
-    }
+//    public User(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+//      this.username = username;
+//      this.password = password;
+//      thi
+//    }
 
-    public User(String username, String password, boolean b, boolean b1, boolean b2, boolean b3, Collection<? extends GrantedAuthority> authorities) {
-    }
-    //teste
+  //teste
 
     public Integer getId() {
         return id;
@@ -56,13 +63,7 @@ public class User implements UserDetails {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

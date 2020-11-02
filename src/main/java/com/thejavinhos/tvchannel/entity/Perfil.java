@@ -1,5 +1,6 @@
 package com.thejavinhos.tvchannel.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.FetchType;
@@ -12,7 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Perfil implements GrantedAuthority {
+public class Perfil implements GrantedAuthority, Serializable {
 
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
