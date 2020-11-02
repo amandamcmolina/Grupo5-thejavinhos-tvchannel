@@ -39,6 +39,7 @@ public class AutenticacaoService implements UserDetailsService {
           userUm.setAuthorities(user.getAuthorities());
           return userUm;
         }
+
         
         throw new UsernameNotFoundException("Dados inválidos");
 
