@@ -77,7 +77,7 @@ public class ActorService {
       actors = actorRepository.findAllByOrderByPaymentAsc();
     }else if (filter.equals("desc")){
       actors = actorRepository.findAllByOrderByPaymentDesc();
-    }else if(filter.equals("relevancia")){
+    }else if(filter.equals("actorR")){
       actors = actorRepository.findAllByOrderByContadorDesc();
     }
     else{
