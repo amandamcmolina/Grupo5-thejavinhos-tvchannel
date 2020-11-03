@@ -31,7 +31,6 @@ public class ProducerService {
       List<Perfil> roles = new ArrayList<>();
       Optional<Perfil> byId = Optional.ofNullable(perfilRepository.findByRole("ROLE_ADMIN"));
       perfilRepository.findAll();
-      System.out.println(perfilRepository.findAll());
       if (byId.isPresent()) {
         roles.add(byId.get());
       }

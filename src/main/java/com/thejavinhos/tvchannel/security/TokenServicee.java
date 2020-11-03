@@ -23,7 +23,6 @@ public class TokenServicee {
     public String gerarToken(Authentication authentication) {
 //        MyUserDetails myUserDetails = (MyUserDetails) authentication.getPrincipal();
         MyUserDetails myUserDetails = (MyUserDetails) authentication.getPrincipal();
-        System.out.println("authorities " + myUserDetails.getAuthorities());
         Date hoje = new Date();
         Date dataExpiracao = new Date(hoje.getTime() + Long.parseLong(expiration));
         return Jwts.builder()

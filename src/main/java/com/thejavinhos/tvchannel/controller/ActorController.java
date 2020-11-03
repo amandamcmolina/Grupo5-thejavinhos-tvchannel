@@ -55,7 +55,7 @@ ActorController {
       @RequestParam("genreWork") String genreWork,
       @RequestParam("begin") String begin,
       @RequestParam("amount") Double amount,
-      @RequestParam(required = false) String orderByamount) throws ParseException {
+      @RequestParam(required = false) String filter) throws ParseException {
     LocalDate date;
     if(!begin.isBlank()){
       DateTimeFormatter formatar = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -67,10 +67,10 @@ ActorController {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     if (auth != null &&
         auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))){
-      if(orderByamount == null){
+      if(filter == null){
         return ResponseEntity.ok(actorService.searchActor(quantity, genreWork, date, amount));
       }else{
-        return ResponseEntity.ok(actorService.searchActorFilter(quantity, genreWork, date, amount, orderByamount));
+        return ResponseEntity.ok(actorService.searchActorFilter(quantity, genreWork, date, amount, filter));
       }
     }
 

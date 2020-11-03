@@ -55,6 +55,8 @@ public class ReserveService {
               || begin.compareTo(endAtual) == 0 || end.compareTo(beginAtual) == 0) {
         throw new IllegalArgumentException("The reserve already exists");
       }
+
+      actor.setContador(actor.getContador() + 1);
     }
 
     return reserveRepository.save(buildReserve(actor, producer, begin, end));
