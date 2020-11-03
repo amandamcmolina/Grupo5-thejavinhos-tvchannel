@@ -18,4 +18,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         Map<String, String> message = Map.of("message",exception.getMessage());
         return handleExceptionInternal(exception,message,new HttpHeaders(), HttpStatus.CONFLICT,webRequest);
     }
+  
+  @ExceptionHandler(value = {IndexOutOfBoundsException.class})
+  protected ResponseEntity<Object> handleConflicts2(RuntimeException exception, WebRequest webRequest){
+    Map<String, String> message = Map.of("message",exception.getMessage());
+    return handleExceptionInternal(exception,message,new HttpHeaders(), HttpStatus.CONFLICT,webRequest);
+  }
 }
