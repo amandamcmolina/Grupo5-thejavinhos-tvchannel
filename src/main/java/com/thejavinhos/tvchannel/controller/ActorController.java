@@ -39,7 +39,14 @@ ActorController {
 
   @GetMapping("/{username}")
   public ResponseEntity<List<Reserve>> listById(@PathVariable String username) {
-    return ResponseEntity.ok(actorService.reserveList(username));
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    if (auth != null &&
+        auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_USER"))){
+      return ResponseEntity.ok(actorService.reserveList(username));
+    }
+
+    throw new IllegalArgumentException("You are not a user");
+
   }
 
   @GetMapping("/search")
