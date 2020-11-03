@@ -9,6 +9,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,11 +57,17 @@ ActorController {
       date = null;
     }
 
-    if(orderByamount == null){
-      return ResponseEntity.ok(actorService.searchActor(quantity, genreWork, date, amount));
-    }else{
-      return ResponseEntity.ok(actorService.searchActorFilter(quantity, genreWork, date, amount, orderByamount));
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    if (auth != null &&
+        auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))){
+      if(orderByamount == null){
+        return ResponseEntity.ok(actorService.searchActor(quantity, genreWork, date, amount));
+      }else{
+        return ResponseEntity.ok(actorService.searchActorFilter(quantity, genreWork, date, amount, orderByamount));
+      }
     }
+
+    throw new IllegalArgumentException("You are not a admin");
 
   }
 }
