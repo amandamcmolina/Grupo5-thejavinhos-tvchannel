@@ -69,14 +69,18 @@ public class ActorService {
 
   //PESQUISAR COM FILTRO
   public List<Actor> searchActorFilter(Integer quantity, String genreWork, LocalDate begin,
-      Double amount, String order) {
+      Double amount, String filter) {
 
     List<Actor> actors;
-    if(order.equals("asc")){
+
+    if(filter.equals("asc")){
       actors = actorRepository.findAllByOrderByPaymentAsc();
-    }else if (order.equals("desc")){
+    }else if (filter.equals("desc")){
       actors = actorRepository.findAllByOrderByPaymentDesc();
-    }else{
+    }else if(filter.equals("relevancia")){
+      actors = actorRepository.findAllByOrderByContadorDesc();
+    }
+    else{
       actors = actorRepository.findAll();
     }
 
