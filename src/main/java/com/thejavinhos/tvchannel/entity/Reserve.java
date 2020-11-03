@@ -1,5 +1,6 @@
 package com.thejavinhos.tvchannel.entity;
 
+import java.time.LocalDate;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -28,10 +29,10 @@ public class Reserve {
     private Producer producer;
 
     @Column(name = "date_reserve_begin")
-    private Date dateReserveBegin;
+    private LocalDate dateReserveBegin;
 
     @Column(name = "date_reserve_end")
-    private Date dateReserveEnd;
+    private LocalDate dateReserveEnd;
 
     public Actor getActor() {
         return actor;
@@ -57,19 +58,19 @@ public class Reserve {
         this.producer = producer;
     }
 
-    public Date getDateReserveBegin() {
+    public LocalDate getDateReserveBegin() {
         return dateReserveBegin;
     }
 
-    public void setDateReserveBegin(Date dateReserveBegin) {
+    public void setDateReserveBegin(LocalDate dateReserveBegin) {
         this.dateReserveBegin = dateReserveBegin;
     }
 
-    public Date getDateReserveEnd() {
+    public LocalDate getDateReserveEnd() {
         return dateReserveEnd;
     }
 
-    public void setDateReserveEnd(Date dateReserveEnd) {
+    public void setDateReserveEnd(LocalDate dateReserveEnd) {
         this.dateReserveEnd = dateReserveEnd;
     }
 }
