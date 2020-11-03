@@ -9,8 +9,11 @@ import java.util.List;
 
 public interface ActorRepository extends JpaRepository<Actor, Integer> {
 
-    Actor findByUsername(String username);
+  Actor findByUsername(String username);
 
+  List<Actor> findAllByOrderByPaymentAsc();
+
+  List<Actor> findAllByOrderByPaymentDesc();
 
 
 }

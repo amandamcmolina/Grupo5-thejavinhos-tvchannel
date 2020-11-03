@@ -52,6 +52,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/producer").permitAll()
                 .antMatchers("/h2/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/create").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/actors/search").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/actors/{username}").hasRole("USER")
+                .antMatchers(HttpMethod.GET, "/producer/{username}").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().addFilterBefore(new  AutenticacaoViaTokenFilter(tokenService, userRepository), UsernamePasswordAuthenticationFilter.class);

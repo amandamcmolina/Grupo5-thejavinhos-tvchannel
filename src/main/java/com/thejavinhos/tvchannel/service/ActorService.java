@@ -6,6 +6,7 @@ import com.thejavinhos.tvchannel.entity.Reserve;
 import com.thejavinhos.tvchannel.repository.ActorRepository;
 import com.thejavinhos.tvchannel.repository.PerfilRepository;
 import com.thejavinhos.tvchannel.repository.ReserveRepository;
+import java.time.LocalDate;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -56,46 +57,75 @@ public class ActorService {
     }
 
 
-   public List<Actor> searchActor(int quantity, String genreWork, Date begin, Double amount) {
-        var reserves = reserveRepository.findAll();
-        var actors = actorRepository.findAll();
-        ;
+  public List<Actor> searchActor(Integer quantity, String genreWork, LocalDate begin,
+      Double amount) {
 
-        var rc = reserves.stream()
-                .filter(a -> !begin.before(a.getDateReserveBegin()) && !begin.after(a.getDateReserveEnd()))
-                .collect(Collectors.toList());
-      System.out.println(rc);
-        var ac = new ArrayList();
-        rc.forEach(reserve -> {
-            ac.add(reserve.getActor());
-        });
-        actors.removeAll(ac);
+    var reserves = reserveRepository.findAll();
+    var actors = actorRepository.findAll();
 
-        var ag = actors.stream().filter(actor -> actor.getGenreWork().contains(genreWork)).collect(Collectors.toList());
+    return search_filter(actors, quantity, genreWork, begin, amount);
+  }
 
-        var lista = new ArrayList();
 
-      for (var i = 0; i < quantity; i++) {
-        if(quantity <= ag.size()) {
-          ag.removeIf(a -> a.getPayment() > amount );
+  //PESQUISAR COM FILTRO
+  public List<Actor> searchActorFilter(Integer quantity, String genreWork, LocalDate begin,
+      Double amount, String order) {
 
-        }else
-        {
-          throw new IndexOutOfBoundsException("There are no actors available in this amount");
-        }
-
-      }
-
-        for (var i = 0; i < quantity; i++) {
-          if(quantity <= ag.size()) {
-            lista.add(ag.get(i));//
-
-          }else
-          {
-            throw new IndexOutOfBoundsException("There are no more actors available");
-          }
-
-        }
-      return lista;
+    List<Actor> actors;
+    if(order.equals("asc")){
+      actors = actorRepository.findAllByOrderByPaymentAsc();
+    }else if (order.equals("desc")){
+      actors = actorRepository.findAllByOrderByPaymentDesc();
+    }else{
+      actors = actorRepository.findAll();
     }
+
+    return search_filter(actors, quantity, genreWork, begin, amount);
+  }
+
+
+  //RESULTADOS GERAIS DA PESQUISA
+  public List<Actor> search_filter(List<Actor> actors, Integer quantity, String genreWork, LocalDate begin, Double amount){
+    var reserves = reserveRepository.findAll();
+
+    if (actors.isEmpty()) {
+      throw new IndexOutOfBoundsException("There are not registered actors");
+    }
+
+    if (genreWork.isBlank() || amount == null || begin == null || quantity == null) {
+      throw new IndexOutOfBoundsException("You must fill all blanks");
+    }
+
+    var rc = reserves.stream()
+        .filter(a -> begin.isAfter(a.getDateReserveBegin()) && begin.isBefore(a.getDateReserveEnd())
+            || begin.compareTo(a.getDateReserveBegin()) == 0
+            || begin.compareTo(a.getDateReserveEnd()) == 0)
+        .collect(Collectors.toList());
+    var ac = new ArrayList();
+    rc.forEach(reserve -> {
+      ac.add(reserve.getActor());
+    });
+    actors.removeAll(ac);
+
+    List<Actor> actorsGenre = actors.stream()
+        .filter(actor -> actor.getGenreWork().toLowerCase().equals(genreWork))
+        .collect(Collectors.toList());
+    if (actorsGenre.isEmpty()) {
+      throw new IndexOutOfBoundsException("There are not actors with this genre");
+    }
+
+    actorsGenre.removeIf(a -> a.getPayment() > amount);
+
+    if (actorsGenre.isEmpty()) {
+      throw new IndexOutOfBoundsException("There are no actors available in this amount");
+    }
+
+    if (quantity >= actorsGenre.size()) {
+      return actorsGenre;
+    } else if (quantity < actorsGenre.size()) {
+      System.out.println("There are only " + actorsGenre.size() + " actors with this filter");
+      return actorsGenre.subList(0, quantity);
+    }
+    return actorsGenre;
+  }
 }
