@@ -5,6 +5,8 @@ import com.thejavinhos.tvchannel.entity.Producer;
 import com.thejavinhos.tvchannel.entity.Reserve;
 import com.thejavinhos.tvchannel.service.ActorService;
 import com.thejavinhos.tvchannel.service.ProducerService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,17 +21,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/producer")
+@Api(value="API REST producer")
 public class ProducerController {
 
   @Autowired
   private ProducerService producerService;
 
   @PostMapping
+  @ApiOperation(value= "Create new Producer")
   public ResponseEntity<Producer> createProducer(@RequestBody Producer producer) {
     return ResponseEntity.ok(producerService.saveProducer(producer));
   }
 
   @GetMapping("/{username}")
+  @ApiOperation(value= "Return the producer's reserves")
   public ResponseEntity<List<Reserve>> listById(@PathVariable String username) {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     if (auth != null &&

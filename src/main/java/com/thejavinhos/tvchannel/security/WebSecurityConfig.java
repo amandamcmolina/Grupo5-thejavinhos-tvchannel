@@ -50,8 +50,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
                 .antMatchers(HttpMethod.POST, "/actors").permitAll()
                 .antMatchers(HttpMethod.POST, "/producer").permitAll()
+                .antMatchers(HttpMethod.GET, "/producer").permitAll()
                 .antMatchers("/h2/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/create").hasRole("ADMIN")
+                .antMatchers("/**/swagger-ui.html").permitAll()
+                .antMatchers(HttpMethod.POST, "/**/swagger-resources/**", "/**/webjars/springfox-swagger-ui/**",
+                    "/**/v2/api-docs/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/actors/search").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/actors/{username}").hasRole("USER")
                 .antMatchers(HttpMethod.GET, "/producer/{username}").hasRole("ADMIN")
