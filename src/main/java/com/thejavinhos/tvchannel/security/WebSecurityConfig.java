@@ -52,9 +52,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/producer").permitAll()
                 .antMatchers(HttpMethod.GET, "/producer").permitAll()
                 .antMatchers("/h2/**").permitAll()
-                .antMatchers("/**/swagger-ui.html").permitAll()
-                .antMatchers(HttpMethod.POST, "/**/swagger-resources/**", "/**/webjars/springfox-swagger-ui/**",
-                    "/**/v2/api-docs/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/actors/search").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/actors/{username}").hasRole("USER")
                 .antMatchers(HttpMethod.GET, "/producer/{username}").hasRole("ADMIN")
@@ -77,6 +74,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     //requisicoes de recursos estaticos(js, css, imagens)
     @Override
     public void configure(WebSecurity web) throws Exception{
-      //
+      web.ignoring().antMatchers("/**.html", "/v2/api-docs", "/webjars/**", "/configuration/**", "/swagger-resources/**");
     }
+
+
+
+//    .antMatchers("/**/swagger-ui.html").permitAll()
+//                .antMatchers("/swagger-ui.html").permitAll()
+//                .antMatchers("/swagger-ui/index.html").permitAll()
+//                .antMatchers("/**/swagger-ui/index.html").permitAll()
+//                .antMatchers("/**/context-path/swagger-ui/index.html").permitAll()
+//                .antMatchers("/context-path/swagger-ui/index.html").permitAll()
+//                .antMatchers(HttpMethod.POST, "/**/swagger-resources/**", "/**/webjars/springfox-swagger-ui/**",
+//      "/**/v2/api-docs/**").permitAll()
 }
