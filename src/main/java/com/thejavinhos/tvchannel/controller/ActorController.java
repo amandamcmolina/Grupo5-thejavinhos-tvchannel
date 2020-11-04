@@ -35,11 +35,11 @@ public class ActorController {
     return ResponseEntity.ok(actorService.saveActor(actor));
   }
 
-  @GetMapping
-  @ApiOperation(value= "return actors's list")
-  public ResponseEntity<List<Actor>> listAll() {
-    return ResponseEntity.ok(actorService.listAllActors());
-  }
+//  @GetMapping
+//  @ApiOperation(value= "return actors's list")
+//  public ResponseEntity<List<Actor>> listAll() {
+//    return ResponseEntity.ok(actorService.listAllActors());
+//  }
 
 
   @GetMapping("/{username}")

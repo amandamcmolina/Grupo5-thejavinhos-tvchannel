@@ -40,8 +40,8 @@ public class SwaggerConfig {
             .parameterType("header")
             .required(false)
             .build()
-        ));
-//        .ignoredParameterTypes(User.class)
+        ))
+        .ignoredParameterTypes(User.class);
 
 
   }

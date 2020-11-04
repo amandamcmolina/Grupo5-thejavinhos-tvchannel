@@ -28,11 +28,11 @@ public class ReserveController {
     @Autowired
     private ReserveService reserveService;
 
-    @GetMapping
-    @ApiOperation(value= "Return reseves's list")
-    private ResponseEntity <List<Reserve>> list(){
-        return ResponseEntity.ok(reserveService.listAll());
-    }
+//    @GetMapping
+//    @ApiOperation(value= "Return reseves's list")
+//    private ResponseEntity <List<Reserve>> list(){
+//        return ResponseEntity.ok(reserveService.listAll());
+//    }
 
 
     @PostMapping

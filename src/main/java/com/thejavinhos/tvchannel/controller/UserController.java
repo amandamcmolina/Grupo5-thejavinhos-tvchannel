@@ -16,14 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 @RequestMapping("/user")
-@Api(value="API REST User")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
     @PostMapping
-    @ApiOperation(value= "Create new geral user")
     public ResponseEntity<User> createNewUser(@RequestBody User user){
         User newUser = userService.saveUser(user);
         return ResponseEntity.ok(newUser);

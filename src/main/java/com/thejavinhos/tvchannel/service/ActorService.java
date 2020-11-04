@@ -46,9 +46,9 @@ public class ActorService {
     }
 
 
-    public List<Actor> listAllActors() {
-        return (List<Actor>) actorRepository.findAll();
-    }
+//    public List<Actor> listAllActors() {
+//        return (List<Actor>) actorRepository.findAll();
+//    }
 
     public List<Reserve> reserveList(String username) {
         var actor = actorRepository.findByUsername(username);
