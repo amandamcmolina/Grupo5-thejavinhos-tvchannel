@@ -36,7 +36,7 @@ public class ActorService {
   @Autowired
   private PerfilRepository perfilRepository;
 
-  public Actor saveActor(CreateActor actor) {
+  public ReturnActor saveActor(CreateActor actor) {
     if (actorRepository.findByUsername(actor.getUsername().toLowerCase()) == null) {
       List<Perfil> roles = new ArrayList<>();
       Optional<Perfil> byId = Optional
@@ -51,7 +51,11 @@ public class ActorService {
       actorFinal.setGender(actor.getGender().toLowerCase());
       actorFinal.setPassword(actor.getPassword());
       actorFinal.setGenreWork(actor.getGenreWork().toLowerCase());
-      return actorRepository.save(actorFinal);
+      actorFinal.setName(actor.getName());
+      actorRepository.save(actorFinal);
+      ReturnActor returnActor = new ReturnActor(actorFinal.getId(), actorFinal.getUsername(), actorFinal.getName(),
+                                actorFinal.getGender(), actorFinal.getPayment(), actorFinal.getGenreWork());
+      return returnActor;
     } else {
       throw new IllegalArgumentException("Actor already exists");
     }
@@ -60,8 +64,11 @@ public class ActorService {
 
   public List<ReturnReserve> reserveList(String username) {
     var actor = actorRepository.findByUsername(username);
+    if(actor == null){
+      throw new IndexOutOfBoundsException("this username does not exist");
+    }
     List<Reserve> reserveList = reserveRepository.findAllByActorId(actor.getId());
-    ReturnActor returnActor = new ReturnActor(actor.getUsername(), actor.getGender(),
+    ReturnActor returnActor = new ReturnActor(actor.getId(), actor.getUsername(), actor.getName(), actor.getGender(),
         actor.getPayment(), actor.getGenreWork());
     List reservesActor = new ArrayList();
     reserveList.forEach(reserve -> {

@@ -30,7 +30,7 @@ public class ProducerService {
   @Autowired
   private ReserveRepository reserveRepository;
 
-  public Producer saveProducer(CreateProducer producer) {
+  public ReturnProducer saveProducer(CreateProducer producer) {
     if (producerRepository.findByUsername(producer.getUsername().toLowerCase()) == null) {
       List<Perfil> roles = new ArrayList<>();
       Optional<Perfil> byId = Optional.ofNullable(perfilRepository.findByRole("ROLE_ADMIN"));
@@ -42,7 +42,10 @@ public class ProducerService {
       finalProducer.setPassword(producer.getPassword());
       finalProducer.setUsername(producer.getUsername().toLowerCase());
       finalProducer.setPerfis(roles);
-      return producerRepository.save(finalProducer);
+      finalProducer.setName(producer.getName());
+      producerRepository.save(finalProducer);
+      ReturnProducer returnProducer = new ReturnProducer(finalProducer.getId(), finalProducer.getUsername(), finalProducer.getName());
+      return returnProducer;
     } else {
       throw new IllegalArgumentException("Producer already exists");
     }
@@ -50,11 +53,14 @@ public class ProducerService {
 
   public List<ReturnReserve> reserveList(String username) {
     var producer = producerRepository.findByUsername(username);
+    if(producer == null){
+      throw new IndexOutOfBoundsException("this username does not exist");
+    }
     List<Reserve> reserveList = reserveRepository.findAllByProducerId(producer.getId());
-    ReturnProducer returnProducer = new ReturnProducer(producer.getUsername());
+    ReturnProducer returnProducer = new ReturnProducer(producer.getId(), producer.getUsername(), producer.getName());
     List<ReturnReserve> reserves = new ArrayList<>();
     reserveList.forEach(reserve -> {
-      ReturnActor eachActor = new ReturnActor(reserve.getActor().getUsername(),
+      ReturnActor eachActor = new ReturnActor(reserve.getActor().getId(), reserve.getActor().getUsername(), reserve.getActor().getName(),
                               reserve.getActor().getGender(), reserve.getActor().getPayment(),
                               reserve.getActor().getGenreWork());
       ReturnReserve eachReserve = new ReturnReserve(reserve.getId(), eachActor, returnProducer,

@@ -6,6 +6,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 public class CreateActor {
 
   private String username;
+  private String name;
   private String password;
   private String gender;
   private double payment;
@@ -49,4 +50,11 @@ public class CreateActor {
     this.genreWork = genreWork;
   }
 
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
 }

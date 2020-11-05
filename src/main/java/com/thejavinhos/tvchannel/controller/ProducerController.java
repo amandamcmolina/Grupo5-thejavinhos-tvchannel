@@ -4,6 +4,7 @@ import com.thejavinhos.tvchannel.entity.Actor;
 import com.thejavinhos.tvchannel.entity.CreateProducer;
 import com.thejavinhos.tvchannel.entity.Producer;
 import com.thejavinhos.tvchannel.entity.Reserve;
+import com.thejavinhos.tvchannel.entity.ReturnProducer;
 import com.thejavinhos.tvchannel.entity.ReturnReserve;
 import com.thejavinhos.tvchannel.service.ActorService;
 import com.thejavinhos.tvchannel.service.ProducerService;
@@ -31,7 +32,7 @@ public class ProducerController {
 
   @PostMapping
   @ApiOperation(value= "Create new Producer")
-  public ResponseEntity<Producer> createProducer(@RequestBody CreateProducer producer) {
+  public ResponseEntity<ReturnProducer> createProducer(@RequestBody CreateProducer producer) {
     return ResponseEntity.ok(producerService.saveProducer(producer));
   }
 

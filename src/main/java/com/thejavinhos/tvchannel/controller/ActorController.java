@@ -34,7 +34,7 @@ public class ActorController {
 
   @PostMapping
   @ApiOperation(value= "Create new Actor")
-  public ResponseEntity<Actor> createActor(@RequestBody CreateActor actor) {
+  public ResponseEntity<ReturnActor> createActor(@RequestBody CreateActor actor) {
     return ResponseEntity.ok(actorService.saveActor(actor));
   }
 

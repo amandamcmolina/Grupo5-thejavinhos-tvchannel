@@ -68,8 +68,8 @@ public class ReserveService {
     Reserve savedReserve = buildReserve(actor, producer, begin, end);
     reserveRepository.save(savedReserve);
 
-    ReturnActor returnActor = new ReturnActor(actor.getUsername(), actor.getGender(), actor.getPayment(), actor.getGenreWork());
-    ReturnProducer returnProducer = new ReturnProducer(producer.getUsername());
+    ReturnActor returnActor = new ReturnActor(actor.getId(), actor.getUsername(), actor.getName(), actor.getGender(), actor.getPayment(), actor.getGenreWork());
+    ReturnProducer returnProducer = new ReturnProducer(producer.getId(), producer.getUsername(), producer.getName());
     ReturnReserve returnReserve = new ReturnReserve(savedReserve.getId(), returnActor, returnProducer, begin, end);
 
     return returnReserve;

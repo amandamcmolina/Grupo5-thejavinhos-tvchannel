@@ -2,7 +2,9 @@ package com.thejavinhos.tvchannel.entity;
 
 public class ReturnActor {
 
+  private int id;
   private String username;
+  private String name;
   private String gender;
   private double payment;
   private String genreWork;
@@ -11,7 +13,9 @@ public class ReturnActor {
 
   }
 
-  public ReturnActor(String username, String gender, double payment, String genreWork) {
+  public ReturnActor(int id, String username, String name, String gender, double payment, String genreWork) {
+    this.id = id;
+    this.name = name;
     this.username = username;
     this.gender = gender;
     this.payment = payment;
@@ -51,4 +55,19 @@ public class ReturnActor {
     this.genreWork = genreWork;
   }
 
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
 }
