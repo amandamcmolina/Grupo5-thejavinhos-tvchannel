@@ -1,8 +1,13 @@
 package com.thejavinhos.tvchannel.controller;
 
 import com.thejavinhos.tvchannel.entity.Actor;
+import com.thejavinhos.tvchannel.entity.CreateActor;
 import com.thejavinhos.tvchannel.entity.Reserve;
+import com.thejavinhos.tvchannel.entity.ReturnActor;
+import com.thejavinhos.tvchannel.entity.ReturnReserve;
 import com.thejavinhos.tvchannel.service.ActorService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -19,26 +24,30 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/actors")
-public class
-ActorController {
+@Api(value="API REST Actors")
+@CrossOrigin(origins = "*")
+public class ActorController {
 
   @Autowired
   private ActorService actorService;
 
 
   @PostMapping
-  public ResponseEntity<Actor> createActor(@RequestBody Actor actor) {
+  @ApiOperation(value= "Create new Actor")
+  public ResponseEntity<ReturnActor> createActor(@RequestBody CreateActor actor) {
     return ResponseEntity.ok(actorService.saveActor(actor));
   }
 
-  @GetMapping
-  public ResponseEntity<List<Actor>> listAll() {
-    return ResponseEntity.ok(actorService.listAllActors());
-  }
+//  @GetMapping
+//  @ApiOperation(value= "return actors's list")
+//  public ResponseEntity<List<Actor>> listAll() {
+//    return ResponseEntity.ok(actorService.listAllActors());
+//  }
 
 
   @GetMapping("/{username}")
-  public ResponseEntity<List<Reserve>> listById(@PathVariable String username) {
+  @ApiOperation(value= "Return the actor reserves")
+  public ResponseEntity<List<ReturnReserve>> listById(@PathVariable String username) {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     if (auth != null &&
         auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_USER"))){
@@ -50,7 +59,8 @@ ActorController {
   }
 
   @GetMapping("/search")
-  public ResponseEntity<List<Actor>> search(
+  @ApiOperation(value= "Return the actors's reserve list")
+  public ResponseEntity<List<ReturnActor>> search(
       @RequestParam("quantity") Integer quantity,
       @RequestParam("genreWork") String genreWork,
       @RequestParam("begin") String begin,
