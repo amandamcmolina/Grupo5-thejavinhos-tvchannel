@@ -58,7 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().addFilterBefore(new  AutenticacaoViaTokenFilter(tokenService, userRepository), UsernamePasswordAuthenticationFilter.class);
-//                .and().logout().logoutRequestM    atcher(new AntPathRequestMatcher("/logout"));
+//                .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
 
         http.headers().frameOptions().disable();
     }
@@ -76,15 +76,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception{
       web.ignoring().antMatchers("/**.html", "/v2/api-docs", "/webjars/**", "/configuration/**", "/swagger-resources/**");
     }
-
-
-
-//    .antMatchers("/**/swagger-ui.html").permitAll()
-//                .antMatchers("/swagger-ui.html").permitAll()
-//                .antMatchers("/swagger-ui/index.html").permitAll()
-//                .antMatchers("/**/swagger-ui/index.html").permitAll()
-//                .antMatchers("/**/context-path/swagger-ui/index.html").permitAll()
-//                .antMatchers("/context-path/swagger-ui/index.html").permitAll()
-//                .antMatchers(HttpMethod.POST, "/**/swagger-resources/**", "/**/webjars/springfox-swagger-ui/**",
-//      "/**/v2/api-docs/**").permitAll()
 }

@@ -46,6 +46,7 @@ public class ActorService {
       }
       Actor actorFinal = new Actor();
       actorFinal.setUsername(actor.getUsername().toLowerCase());
+      actorFinal.setName(actor.getName());
       actorFinal.setPerfis(roles);
       actorFinal.setPayment(actor.getPayment());
       actorFinal.setGender(actor.getGender().toLowerCase());
@@ -102,7 +103,7 @@ public class ActorService {
       actors = actorRepository.findAllByOrderByPaymentAsc();
     } else if (filter.equals("desc")) {
       actors = actorRepository.findAllByOrderByPaymentDesc();
-    } else if (filter.equals("actorR")) {
+    } else if (filter.equals("reserves")) {
       actors = actorRepository.findAllByOrderByContadorDesc();
     } else {
       actors = actorRepository.findAll();

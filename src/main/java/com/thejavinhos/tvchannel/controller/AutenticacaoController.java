@@ -2,6 +2,7 @@ package com.thejavinhos.tvchannel.controller;
 
 import com.thejavinhos.tvchannel.entity.LoginForm;
 import com.thejavinhos.tvchannel.security.TokenServicee;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +39,11 @@ public class AutenticacaoController {
         }catch (AuthenticationException e){
             return ResponseEntity.badRequest().build();
         }
+    }
 
-
+    @RequestMapping("/logout")
+    public String logout(HttpSession session) {
+      session.invalidate();
+      return "redirect:login";
     }
 }

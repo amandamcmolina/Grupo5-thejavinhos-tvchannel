@@ -36,7 +36,7 @@ public class ReserveService {
   public ReturnReserve createReserve(ReserveRequest reserve) {
     if (actorRepository.findByUsername(reserve.getUsernameActor().toLowerCase()) == null
         || producerRepository.findByUsername(reserve.getUsernameProducer().toLowerCase()) == null || reserve.getBegin() == null || reserve.getEnd() == null) {
-      throw new IllegalArgumentException("You need to pass a valid user or produce");
+      throw new IllegalArgumentException("You need to pass a valid user or producer");
     }
     if(reserve.getBegin().isBefore(LocalDate.now()) || reserve.getEnd().isBefore(reserve.getBegin())){
       throw new IllegalArgumentException("Check the date");
