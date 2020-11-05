@@ -31,7 +31,7 @@ public class ProducerService {
   private ReserveRepository reserveRepository;
 
   public Producer saveProducer(CreateProducer producer) {
-    if (producerRepository.findByUsername(producer.getUsername()) == null) {
+    if (producerRepository.findByUsername(producer.getUsername().toLowerCase()) == null) {
       List<Perfil> roles = new ArrayList<>();
       Optional<Perfil> byId = Optional.ofNullable(perfilRepository.findByRole("ROLE_ADMIN"));
       perfilRepository.findAll();
@@ -40,7 +40,7 @@ public class ProducerService {
       }
       Producer finalProducer = new Producer();
       finalProducer.setPassword(producer.getPassword());
-      finalProducer.setUsername(producer.getUsername());
+      finalProducer.setUsername(producer.getUsername().toLowerCase());
       finalProducer.setPerfis(roles);
       return producerRepository.save(finalProducer);
     } else {

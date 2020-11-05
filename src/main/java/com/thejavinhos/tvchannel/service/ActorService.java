@@ -37,7 +37,7 @@ public class ActorService {
   private PerfilRepository perfilRepository;
 
   public Actor saveActor(CreateActor actor) {
-    if (actorRepository.findByUsername(actor.getUsername()) == null) {
+    if (actorRepository.findByUsername(actor.getUsername().toLowerCase()) == null) {
       List<Perfil> roles = new ArrayList<>();
       Optional<Perfil> byId = Optional
           .ofNullable(perfilRepository.findByRole("ROLE_USER")); // linha id role // UM PERFIL
