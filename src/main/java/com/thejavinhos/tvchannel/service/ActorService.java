@@ -4,6 +4,7 @@ import com.thejavinhos.tvchannel.entity.Actor;
 import com.thejavinhos.tvchannel.entity.CreateActor;
 import com.thejavinhos.tvchannel.entity.Perfil;
 import com.thejavinhos.tvchannel.entity.Reserve;
+import com.thejavinhos.tvchannel.entity.ReturnActor;
 import com.thejavinhos.tvchannel.repository.ActorRepository;
 import com.thejavinhos.tvchannel.repository.PerfilRepository;
 import com.thejavinhos.tvchannel.repository.ReserveRepository;
@@ -63,18 +64,18 @@ public class ActorService {
     }
 
 
-  public List<Actor> searchActor(Integer quantity, String genreWork, LocalDate begin,
+  public List<ReturnActor> searchActor(Integer quantity, String genreWork, LocalDate begin,
       Double amount) {
 
     var reserves = reserveRepository.findAll();
     var actors = actorRepository.findAll();
 
-    return search_filter(actors, quantity, genreWork, begin, amount);
+    return (List<ReturnActor>) search_filter(actors, quantity, genreWork, begin, amount);
   }
 
 
   //PESQUISAR COM FILTRO
-  public List<Actor> searchActorFilter(Integer quantity, String genreWork, LocalDate begin,
+  public List<ReturnActor> searchActorFilter(Integer quantity, String genreWork, LocalDate begin,
       Double amount, String filter) {
 
     List<Actor> actors;
@@ -90,12 +91,12 @@ public class ActorService {
       actors = actorRepository.findAll();
     }
 
-    return search_filter(actors, quantity, genreWork, begin, amount);
+    return (List<ReturnActor>) search_filter(actors, quantity, genreWork, begin, amount);
   }
 
 
   //RESULTADOS GERAIS DA PESQUISA
-  public List<Actor> search_filter(List<Actor> actors, Integer quantity, String genreWork, LocalDate begin, Double amount){
+  public List<? extends Object> search_filter(List<Actor> actors, Integer quantity, String genreWork, LocalDate begin, Double amount){
     var reserves = reserveRepository.findAll();
 
     if (actors.isEmpty()) {
@@ -117,14 +118,28 @@ public class ActorService {
     });
     actors.removeAll(ac);
 
-    List<Actor> actorsGenre = actors.stream()
-        .filter(actor -> actor.getGenreWork().toLowerCase().equals(genreWork))
-        .collect(Collectors.toList());
+    System.out.println("actors" + actors);
+
+    List<Actor> actorsGenre = actors;
+//    actors.forEach(actor -> {
+//      if(actor.getGenreWork().toLowerCase().equals(genreWork)){
+//        actorsGenre.add(actor);
+//      }
+//    });
+//    List<Actor> actorsGenre = actors.stream()
+//        .filter(actor -> actor.getGenreWork().toLowerCase().equals(genreWork))
+//        .collect(Collectors.toList());
+
+    System.out.println("teste " + actorsGenre);
     if (actorsGenre.isEmpty()) {
       throw new IndexOutOfBoundsException("There are not actors with this genre");
     }
 
+    System.out.println("actorGenre: " + actorsGenre);
+
     actorsGenre.removeIf(a -> a.getPayment() > amount);
+
+    System.out.println("actorGenre2: " + actorsGenre);
 
     if (actorsGenre.isEmpty()) {
       throw new IndexOutOfBoundsException("There are no actors available in this amount");
@@ -133,9 +148,19 @@ public class ActorService {
     if (quantity >= actorsGenre.size()) {
       return actorsGenre;
     } else if (quantity < actorsGenre.size()) {
-      System.out.println("There are only " + actorsGenre.size() + " actors with this filter");
       return actorsGenre.subList(0, quantity);
     }
-    return actorsGenre;
+
+    List<ReturnActor> returnActors = new ArrayList<>();
+    actorsGenre.forEach(actor -> {
+      ReturnActor eachReturnActor = new ReturnActor();
+      eachReturnActor.setGender(actor.getGender());
+      eachReturnActor.setGenreWork(actor.getGenreWork());
+      eachReturnActor.setPayment(actor.getPayment());
+      eachReturnActor.setUsername(actor.getUsername());
+      returnActors.add(eachReturnActor);
+    });
+
+    return returnActors;
   }
 }

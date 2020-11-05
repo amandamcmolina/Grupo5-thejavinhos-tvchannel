@@ -3,6 +3,7 @@ package com.thejavinhos.tvchannel.controller;
 import com.thejavinhos.tvchannel.entity.Actor;
 import com.thejavinhos.tvchannel.entity.CreateActor;
 import com.thejavinhos.tvchannel.entity.Reserve;
+import com.thejavinhos.tvchannel.entity.ReturnActor;
 import com.thejavinhos.tvchannel.service.ActorService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -58,7 +59,7 @@ public class ActorController {
 
   @GetMapping("/search")
   @ApiOperation(value= "Return the actors's list researched ")
-  public ResponseEntity<List<Actor>> search(
+  public ResponseEntity<List<ReturnActor>> search(
       @RequestParam("quantity") Integer quantity,
       @RequestParam("genreWork") String genreWork,
       @RequestParam("begin") String begin,
