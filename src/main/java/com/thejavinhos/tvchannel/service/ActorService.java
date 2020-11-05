@@ -10,6 +10,7 @@ import com.thejavinhos.tvchannel.entity.ReturnReserve;
 import com.thejavinhos.tvchannel.repository.ActorRepository;
 import com.thejavinhos.tvchannel.repository.PerfilRepository;
 import com.thejavinhos.tvchannel.repository.ReserveRepository;
+import java.text.Normalizer;
 import java.time.LocalDate;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,49 +27,52 @@ import java.util.stream.Stream;
 @Component
 public class ActorService {
 
-    @Autowired
-    private ActorRepository actorRepository;
+  @Autowired
+  private ActorRepository actorRepository;
 
-    @Autowired
-    private ReserveRepository reserveRepository;
+  @Autowired
+  private ReserveRepository reserveRepository;
 
-    @Autowired
-    private PerfilRepository perfilRepository;
+  @Autowired
+  private PerfilRepository perfilRepository;
 
-    public Actor saveActor(CreateActor actor) {
-        if (actorRepository.findByUsername(actor.getUsername()) == null) {
-          List<Perfil> roles = new ArrayList<>();
-          Optional<Perfil> byId = Optional.ofNullable(perfilRepository.findByRole("ROLE_USER")); // linha id role // UM PERFIL
-          if (byId.isPresent()) {
-            roles.add(byId.get());
-          }
-          Actor actorFinal = new Actor();
-          actorFinal.setUsername(actor.getUsername());
-          actorFinal.setPerfis(roles);
-          actorFinal.setPayment(actor.getPayment());
-          actorFinal.setGender(actor.getGender());
-          actorFinal.setPassword(actor.getPassword());
-          actorFinal.setGenreWork(actor.getGenreWork());
-            return actorRepository.save(actorFinal);
-        } else {
-            throw new IllegalArgumentException("Actor already exists");
-        }
+  public Actor saveActor(CreateActor actor) {
+    if (actorRepository.findByUsername(actor.getUsername()) == null) {
+      List<Perfil> roles = new ArrayList<>();
+      Optional<Perfil> byId = Optional
+          .ofNullable(perfilRepository.findByRole("ROLE_USER")); // linha id role // UM PERFIL
+      if (byId.isPresent()) {
+        roles.add(byId.get());
+      }
+      Actor actorFinal = new Actor();
+      actorFinal.setUsername(actor.getUsername().toLowerCase());
+      actorFinal.setPerfis(roles);
+      actorFinal.setPayment(actor.getPayment());
+      actorFinal.setGender(actor.getGender().toLowerCase());
+      actorFinal.setPassword(actor.getPassword());
+      actorFinal.setGenreWork(actor.getGenreWork().toLowerCase());
+      return actorRepository.save(actorFinal);
+    } else {
+      throw new IllegalArgumentException("Actor already exists");
     }
+  }
 
 
-    public List<ReturnReserve> reserveList(String username) {
-        var actor = actorRepository.findByUsername(username);
-        List <Reserve> reserveList= reserveRepository.findAllByActorId(actor.getId());
-        ReturnActor returnActor = new ReturnActor(actor.getUsername(), actor.getGender(), actor.getPayment(), actor.getGenreWork());
-        List reservesActor = new ArrayList();
-        reserveList.forEach(reserve -> {
-          ReturnProducer returnProducer = new ReturnProducer();
-          returnProducer.setUsername(reserve.getProducer().getUsername());
-          ReturnReserve eachReserve = new ReturnReserve(reserve.getId(), returnActor, returnProducer, reserve.getDateReserveBegin(), reserve.getDateReserveEnd());
-          reservesActor.add(eachReserve);
-        });
-        return reservesActor;
-    }
+  public List<ReturnReserve> reserveList(String username) {
+    var actor = actorRepository.findByUsername(username);
+    List<Reserve> reserveList = reserveRepository.findAllByActorId(actor.getId());
+    ReturnActor returnActor = new ReturnActor(actor.getUsername(), actor.getGender(),
+        actor.getPayment(), actor.getGenreWork());
+    List reservesActor = new ArrayList();
+    reserveList.forEach(reserve -> {
+      ReturnProducer returnProducer = new ReturnProducer();
+      returnProducer.setUsername(reserve.getProducer().getUsername());
+      ReturnReserve eachReserve = new ReturnReserve(reserve.getId(), returnActor, returnProducer,
+          reserve.getDateReserveBegin(), reserve.getDateReserveEnd());
+      reservesActor.add(eachReserve);
+    });
+    return reservesActor;
+  }
 
 
   public List<ReturnActor> searchActor(Integer quantity, String genreWork, LocalDate begin,
@@ -87,14 +91,13 @@ public class ActorService {
 
     List<Actor> actors;
 
-    if(filter.equals("asc")){
+    if (filter.equals("asc")) {
       actors = actorRepository.findAllByOrderByPaymentAsc();
-    }else if (filter.equals("desc")){
+    } else if (filter.equals("desc")) {
       actors = actorRepository.findAllByOrderByPaymentDesc();
-    }else if(filter.equals("actorR")){
+    } else if (filter.equals("actorR")) {
       actors = actorRepository.findAllByOrderByContadorDesc();
-    }
-    else{
+    } else {
       actors = actorRepository.findAll();
     }
 
@@ -103,7 +106,8 @@ public class ActorService {
 
 
   //RESULTADOS GERAIS DA PESQUISA
-  public List<? extends Object> search_filter(List<Actor> actors, Integer quantity, String genreWork, LocalDate begin, Double amount){
+  public List<? extends Object> search_filter(List<Actor> actors, Integer quantity,
+      String genreWork, LocalDate begin, Double amount) {
     var reserves = reserveRepository.findAll();
 
     if (actors.isEmpty()) {
