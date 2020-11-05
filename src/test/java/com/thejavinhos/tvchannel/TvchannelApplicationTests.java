@@ -13,7 +13,6 @@ class TvchannelApplicationTests {
 
 	@Test
 	void contextLoads() {
-    Assert.assertTrue(true);
 	}
 
 }
