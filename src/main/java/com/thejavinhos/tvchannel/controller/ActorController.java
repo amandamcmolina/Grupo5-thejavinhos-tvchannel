@@ -4,6 +4,7 @@ import com.thejavinhos.tvchannel.entity.Actor;
 import com.thejavinhos.tvchannel.entity.CreateActor;
 import com.thejavinhos.tvchannel.entity.Reserve;
 import com.thejavinhos.tvchannel.entity.ReturnActor;
+import com.thejavinhos.tvchannel.entity.ReturnReserve;
 import com.thejavinhos.tvchannel.service.ActorService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -46,7 +47,7 @@ public class ActorController {
 
   @GetMapping("/{username}")
   @ApiOperation(value= "Return the actor reserves")
-  public ResponseEntity<List<Reserve>> listById(@PathVariable String username) {
+  public ResponseEntity<List<ReturnReserve>> listById(@PathVariable String username) {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     if (auth != null &&
         auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_USER"))){
@@ -58,7 +59,7 @@ public class ActorController {
   }
 
   @GetMapping("/search")
-  @ApiOperation(value= "Return the actors's list researched ")
+  @ApiOperation(value= "Return the actors's reserve list")
   public ResponseEntity<List<ReturnActor>> search(
       @RequestParam("quantity") Integer quantity,
       @RequestParam("genreWork") String genreWork,

@@ -13,6 +13,7 @@ public interface ReserveRepository extends JpaRepository<Reserve, Integer> {
 
 
     List<Reserve> findAllByActorId(int id);
+    List<Reserve> findAllByProducerId(int id);
 
 
 

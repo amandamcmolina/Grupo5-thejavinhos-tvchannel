@@ -5,6 +5,8 @@ import com.thejavinhos.tvchannel.entity.CreateActor;
 import com.thejavinhos.tvchannel.entity.Perfil;
 import com.thejavinhos.tvchannel.entity.Reserve;
 import com.thejavinhos.tvchannel.entity.ReturnActor;
+import com.thejavinhos.tvchannel.entity.ReturnProducer;
+import com.thejavinhos.tvchannel.entity.ReturnReserve;
 import com.thejavinhos.tvchannel.repository.ActorRepository;
 import com.thejavinhos.tvchannel.repository.PerfilRepository;
 import com.thejavinhos.tvchannel.repository.ReserveRepository;
@@ -54,14 +56,18 @@ public class ActorService {
     }
 
 
-//    public List<Actor> listAllActors() {
-//        return (List<Actor>) actorRepository.findAll();
-//    }
-
-    public List<Reserve> reserveList(String username) {
+    public List<ReturnReserve> reserveList(String username) {
         var actor = actorRepository.findByUsername(username);
-        List <Reserve> actorList= reserveRepository.findAllByActorId(actor.getId());
-        return actorList;
+        List <Reserve> reserveList= reserveRepository.findAllByActorId(actor.getId());
+        ReturnActor returnActor = new ReturnActor(actor.getUsername(), actor.getGender(), actor.getPayment(), actor.getGenreWork());
+        List reservesActor = new ArrayList();
+        reserveList.forEach(reserve -> {
+          ReturnProducer returnProducer = new ReturnProducer();
+          returnProducer.setUsername(reserve.getProducer().getUsername());
+          ReturnReserve eachReserve = new ReturnReserve(reserve.getId(), returnActor, returnProducer, reserve.getDateReserveBegin(), reserve.getDateReserveEnd());
+          reservesActor.add(eachReserve);
+        });
+        return reservesActor;
     }
 
 
