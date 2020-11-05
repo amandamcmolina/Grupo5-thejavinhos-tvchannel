@@ -1,6 +1,7 @@
 package com.thejavinhos.tvchannel.service;
 
 import com.thejavinhos.tvchannel.entity.Actor;
+import com.thejavinhos.tvchannel.entity.CreateActor;
 import com.thejavinhos.tvchannel.entity.Perfil;
 import com.thejavinhos.tvchannel.entity.Reserve;
 import com.thejavinhos.tvchannel.repository.ActorRepository;
@@ -31,15 +32,20 @@ public class ActorService {
     @Autowired
     private PerfilRepository perfilRepository;
 
-    public Actor saveActor(Actor actor) {
+    public Actor saveActor(CreateActor actor) {
         if (actorRepository.findByUsername(actor.getUsername()) == null) {
           List<Perfil> roles = new ArrayList<>();
           Optional<Perfil> byId = Optional.ofNullable(perfilRepository.findByRole("ROLE_USER")); // linha id role // UM PERFIL
           if (byId.isPresent()) {
             roles.add(byId.get());
           }
-          actor.setPerfis(roles);
-            return actorRepository.save(actor);
+          Actor actorFinal = new Actor();
+          actorFinal.setUsername(actor.getUsername());
+          actorFinal.setPerfis(roles);
+          actorFinal.setPayment(actor.getPayment());
+          actorFinal.setGender(actor.getGender());
+          actorFinal.setPassword(actor.getPassword());
+            return actorRepository.save(actorFinal);
         } else {
             throw new IllegalArgumentException("Actor already exists");
         }

@@ -1,6 +1,7 @@
 package com.thejavinhos.tvchannel.service;
 
 import com.thejavinhos.tvchannel.entity.Actor;
+import com.thejavinhos.tvchannel.entity.CreateProducer;
 import com.thejavinhos.tvchannel.entity.Perfil;
 import com.thejavinhos.tvchannel.entity.Producer;
 import com.thejavinhos.tvchannel.entity.Reserve;
@@ -26,7 +27,7 @@ public class ProducerService {
   @Autowired
   private ReserveRepository reserveRepository;
 
-  public Producer saveProducer(Producer producer) {
+  public Producer saveProducer(CreateProducer producer) {
     if (producerRepository.findByUsername(producer.getUsername()) == null) {
       List<Perfil> roles = new ArrayList<>();
       Optional<Perfil> byId = Optional.ofNullable(perfilRepository.findByRole("ROLE_ADMIN"));
@@ -34,8 +35,11 @@ public class ProducerService {
       if (byId.isPresent()) {
         roles.add(byId.get());
       }
-      producer.setPerfis(roles);
-      return producerRepository.save(producer);
+      Producer finalProducer = new Producer();
+      finalProducer.setPassword(producer.getPassword());
+      finalProducer.setUsername(producer.getUsername());
+      finalProducer.setPerfis(roles);
+      return producerRepository.save(finalProducer);
     } else {
       throw new IllegalArgumentException("Producer already exists");
     }

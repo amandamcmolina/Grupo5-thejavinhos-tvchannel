@@ -18,7 +18,6 @@ public class User implements UserDetails{
     @Column(name = "id")
     private Integer id;
 
-
     @Column(name = "username")
     private String username;
 

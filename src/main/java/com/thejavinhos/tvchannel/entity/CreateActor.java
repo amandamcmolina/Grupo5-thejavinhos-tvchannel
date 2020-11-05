@@ -1,31 +1,27 @@
 package com.thejavinhos.tvchannel.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
-//@Data
-//@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Entity
-public class Actor extends User {
+public class CreateActor {
 
-
-  @Column(name = "gender")
+  private String username;
+  private String password;
   private String gender;
-
-  @Column(name = "payment")
   private double payment;
-
-  @Column(name = "genre_work")
   private String genreWork;
 
 
-  private int contador;
-
-  public int getContador() {
-    return contador;
+  public String getPassword() {
+    return password;
   }
 
-  public void setContador(int contador) {
-    this.contador = contador;
+  public String getUsername() {
+    return username;
+  }
+
+  public void setUsername(String username) {
+    this.username = username;
   }
 
   public String getGender() {
@@ -52,6 +48,5 @@ public class Actor extends User {
   public void setGenreWork(String genreWork) {
     this.genreWork = genreWork;
   }
-
 
 }

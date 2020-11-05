@@ -1,6 +1,7 @@
 package com.thejavinhos.tvchannel.controller;
 
 import com.thejavinhos.tvchannel.entity.Actor;
+import com.thejavinhos.tvchannel.entity.CreateProducer;
 import com.thejavinhos.tvchannel.entity.Producer;
 import com.thejavinhos.tvchannel.entity.Reserve;
 import com.thejavinhos.tvchannel.service.ActorService;
@@ -29,7 +30,7 @@ public class ProducerController {
 
   @PostMapping
   @ApiOperation(value= "Create new Producer")
-  public ResponseEntity<Producer> createProducer(@RequestBody Producer producer) {
+  public ResponseEntity<Producer> createProducer(@RequestBody CreateProducer producer) {
     return ResponseEntity.ok(producerService.saveProducer(producer));
   }
 

@@ -1,6 +1,7 @@
 package com.thejavinhos.tvchannel.controller;
 
 import com.thejavinhos.tvchannel.entity.Actor;
+import com.thejavinhos.tvchannel.entity.CreateActor;
 import com.thejavinhos.tvchannel.entity.Reserve;
 import com.thejavinhos.tvchannel.service.ActorService;
 import io.swagger.annotations.Api;
@@ -31,7 +32,7 @@ public class ActorController {
 
   @PostMapping
   @ApiOperation(value= "Create new Actor")
-  public ResponseEntity<Actor> createActor(@RequestBody Actor actor) {
+  public ResponseEntity<Actor> createActor(@RequestBody CreateActor actor) {
     return ResponseEntity.ok(actorService.saveActor(actor));
   }
 
