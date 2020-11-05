@@ -4,6 +4,7 @@ import com.thejavinhos.tvchannel.entity.Actor;
 import com.thejavinhos.tvchannel.entity.MyUserDetails;
 import com.thejavinhos.tvchannel.entity.Reserve;
 import com.thejavinhos.tvchannel.entity.ReserveRequest;
+import com.thejavinhos.tvchannel.entity.ReturnReserve;
 import com.thejavinhos.tvchannel.service.ActorService;
 import com.thejavinhos.tvchannel.service.ReserveService;
 import io.swagger.annotations.Api;
@@ -38,7 +39,7 @@ public class ReserveController {
     @PostMapping
     @CacheEvict(value = "reservas", allEntries = true)
     @ApiOperation(value= "create new Reserve")
-    private ResponseEntity<Reserve> create(@RequestBody ReserveRequest reserve){
+    private ResponseEntity<ReturnReserve> create(@RequestBody ReserveRequest reserve){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null &&
             auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))){

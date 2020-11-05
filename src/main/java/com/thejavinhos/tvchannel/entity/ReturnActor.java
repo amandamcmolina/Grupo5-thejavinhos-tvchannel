@@ -7,6 +7,17 @@ public class ReturnActor {
   private double payment;
   private String genreWork;
 
+  public ReturnActor(){
+
+  }
+
+  public ReturnActor(String username, String gender, double payment, String genreWork) {
+    this.username = username;
+    this.gender = gender;
+    this.payment = payment;
+    this.genreWork = genreWork;
+  }
+
   public String getUsername() {
     return username;
   }

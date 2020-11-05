@@ -8,6 +8,14 @@ public class ReturnProducer {
     return username;
   }
 
+  public ReturnProducer(){
+
+  }
+
+  public ReturnProducer(String username) {
+    this.username = username;
+  }
+
   public void setUsername(String username) {
     this.username = username;
   }

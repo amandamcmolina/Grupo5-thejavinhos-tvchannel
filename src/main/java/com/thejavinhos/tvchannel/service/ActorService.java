@@ -46,6 +46,7 @@ public class ActorService {
           actorFinal.setPayment(actor.getPayment());
           actorFinal.setGender(actor.getGender());
           actorFinal.setPassword(actor.getPassword());
+          actorFinal.setGenreWork(actor.getGenreWork());
             return actorRepository.save(actorFinal);
         } else {
             throw new IllegalArgumentException("Actor already exists");
@@ -120,15 +121,9 @@ public class ActorService {
 
     System.out.println("actors" + actors);
 
-    List<Actor> actorsGenre = actors;
-//    actors.forEach(actor -> {
-//      if(actor.getGenreWork().toLowerCase().equals(genreWork)){
-//        actorsGenre.add(actor);
-//      }
-//    });
-//    List<Actor> actorsGenre = actors.stream()
-//        .filter(actor -> actor.getGenreWork().toLowerCase().equals(genreWork))
-//        .collect(Collectors.toList());
+    List<Actor> actorsGenre = actors.stream()
+        .filter(actor -> actor.getGenreWork().toLowerCase().equals(genreWork))
+        .collect(Collectors.toList());
 
     System.out.println("teste " + actorsGenre);
     if (actorsGenre.isEmpty()) {
@@ -145,10 +140,8 @@ public class ActorService {
       throw new IndexOutOfBoundsException("There are no actors available in this amount");
     }
 
-    if (quantity >= actorsGenre.size()) {
-      return actorsGenre;
-    } else if (quantity < actorsGenre.size()) {
-      return actorsGenre.subList(0, quantity);
+    if (quantity < actorsGenre.size()) {
+      actorsGenre.subList(0, quantity);
     }
 
     List<ReturnActor> returnActors = new ArrayList<>();

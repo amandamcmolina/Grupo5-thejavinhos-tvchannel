@@ -4,6 +4,9 @@ import com.thejavinhos.tvchannel.entity.Actor;
 import com.thejavinhos.tvchannel.entity.Producer;
 import com.thejavinhos.tvchannel.entity.Reserve;
 import com.thejavinhos.tvchannel.entity.ReserveRequest;
+import com.thejavinhos.tvchannel.entity.ReturnActor;
+import com.thejavinhos.tvchannel.entity.ReturnProducer;
+import com.thejavinhos.tvchannel.entity.ReturnReserve;
 import com.thejavinhos.tvchannel.repository.ActorRepository;
 import com.thejavinhos.tvchannel.repository.ProducerRepository;
 import com.thejavinhos.tvchannel.repository.ReserveRepository;
@@ -30,7 +33,7 @@ public class ReserveService {
   private ProducerRepository producerRepository;
 
 
-  public Reserve createReserve(ReserveRequest reserve) {
+  public ReturnReserve createReserve(ReserveRequest reserve) {
     if (actorRepository.findByUsername(reserve.getUsernameActor()) == null
         || producerRepository.findByUsername(reserve.getUsernameProducer()) == null) {
       throw new IllegalArgumentException("You need to pass a valid user or produce");
@@ -59,10 +62,18 @@ public class ReserveService {
       actor.setContador(actor.getContador() + 1);
     }
 
-    return reserveRepository.save(buildReserve(actor, producer, begin, end));
+    Reserve savedReserve = buildReserve(actor, producer, begin, end);
+    reserveRepository.save(savedReserve);
+
+    ReturnActor returnActor = new ReturnActor(actor.getUsername(), actor.getGender(), actor.getPayment(), actor.getGenreWork());
+    ReturnProducer returnProducer = new ReturnProducer(producer.getUsername());
+    ReturnReserve returnReserve = new ReturnReserve(savedReserve.getId(), returnActor, returnProducer, begin, end);
+
+    return returnReserve;
   }
 
   public Reserve buildReserve(Actor actor, Producer producer, LocalDate begin, LocalDate end) {
+
     Reserve newReserve = new Reserve();
     newReserve.setActor(actor);
     newReserve.setProducer(producer);
