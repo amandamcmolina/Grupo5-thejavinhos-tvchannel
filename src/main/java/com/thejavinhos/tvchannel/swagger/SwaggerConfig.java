@@ -49,7 +49,7 @@ public class SwaggerConfig {
   private ApiInfo metaData() {
     return new ApiInfoBuilder()
         .title("Tc Channel - The Javinhos")
-        .description("API tvChannel")
+        .description("API tvChannel - create users and reserve actors")
         .version("1.0")
         .license("Belongs to The Javinhos")
         .licenseUrl("tvChannel.com")

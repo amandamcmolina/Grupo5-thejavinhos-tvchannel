@@ -2,7 +2,6 @@ package com.thejavinhos.tvchannel.entity;
 
 public class CreateProducer {
 
-  private int id;
   private String username;
   private String password;
   private String name;
@@ -18,14 +17,6 @@ public class CreateProducer {
 
   public void setUsername(String username) {
     this.username = username;
-  }
-
-  public int getId() {
-    return id;
-  }
-
-  public void setId(int id) {
-    this.id = id;
   }
 
   public String getName() {
