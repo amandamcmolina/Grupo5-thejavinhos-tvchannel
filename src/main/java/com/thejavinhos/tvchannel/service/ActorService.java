@@ -37,12 +37,17 @@ public class ActorService {
 
   public ReturnActor saveActor(CreateActor actor) {
     if (actorRepository.findByUsername(actor.getUsername().toLowerCase()) == null) {
+
+
+
       List<Perfil> roles = new ArrayList<>();
       Optional<Perfil> byId = Optional
           .ofNullable(perfilRepository.findByRole("ROLE_USER")); // linha id role // UM PERFIL
       if (byId.isPresent()) {
         roles.add(byId.get());
       }
+
+
       Actor actorFinal = new Actor();
       actorFinal.setUsername(actor.getUsername().toLowerCase());
       actorFinal.setName(actor.getName());
@@ -164,6 +169,8 @@ public class ActorService {
     List<ReturnActor> returnActors = new ArrayList<>();
     actorsGenre.forEach(actor -> {
       ReturnActor eachReturnActor = new ReturnActor();
+      eachReturnActor.setName(actor.getName());
+      eachReturnActor.setId(actor.getId());
       eachReturnActor.setGender(actor.getGender());
       eachReturnActor.setGenreWork(actor.getGenreWork());
       eachReturnActor.setPayment(actor.getPayment());
