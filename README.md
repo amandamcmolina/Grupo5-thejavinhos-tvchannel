@@ -26,13 +26,19 @@
 - Utilizamos o spring boot com a seguintes depêndencias: Spring Data JPA, Spring Security, JJWT, Spring Web e swagger.
 - Utilizamos o banco de dados **H2**, ele funciona em memória.
 
+### Swagger
+[Swagger doc](https://thejavinhos5tvchannel.herokuapp.com/swagger-ui.html)
+
+### Base API URL - Heroku
+[URL](https://thejavinhos5tvchannel.herokuapp.com/)
+
 ### Team :handshake:
 - A escolha do time foi feita por sorteio durante a aula.
 - Nossos pontos como equipe foram: `determinação para encontrar boas soluções para vários desafios que aconteceram;`
                                    `Organização de tarefas;`
                                    `Foco e comprometimento para entrega da melhor tarefa possível.`
                                    
-                                   
+            
 
 `-----------------------------------------------------------------`
 
@@ -64,6 +70,12 @@
 ### API :gear:
 - We used the Spring Boot with the following dependecies:  Spring Data JPA, Spring Security, JJWT, Spring Webe and swagger.
 - We used the **H2** as a data base in memory. And the Swagger to document our project. 
+
+### Swagger
+[Swagger doc](https://thejavinhos5tvchannel.herokuapp.com/swagger-ui.html)
+
+### Base API URL - Heroku
+[URL](https://thejavinhos5tvchannel.herokuapp.com/)
 
 ### Team :handshake:
 - The team was chosen to draw during the class .
