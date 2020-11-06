@@ -6,40 +6,40 @@ import java.util.Date;
 
 public class ReserveRequest {
 
-    private String usernameProducer;
-    private String usernameActor;
-    private LocalDate begin;
-    private LocalDate end;
+  private String usernameProducer;
+  private String usernameActor;
+  private LocalDate begin;
+  private LocalDate end;
 
-    public String getUsernameProducer() {
-        return usernameProducer;
-    }
+  public String getUsernameProducer() {
+    return usernameProducer;
+  }
 
-    public void setUsernameProducer(String usernameProducer) {
-        this.usernameProducer = usernameProducer;
-    }
+  public void setUsernameProducer(String usernameProducer) {
+    this.usernameProducer = usernameProducer;
+  }
 
-    public String getUsernameActor() {
-        return usernameActor;
-    }
+  public String getUsernameActor() {
+    return usernameActor;
+  }
 
-    public void setUsernameActor(String usernameActor) {
-        this.usernameActor = usernameActor;
-    }
+  public void setUsernameActor(String usernameActor) {
+    this.usernameActor = usernameActor;
+  }
 
-    public LocalDate getBegin() {
-        return begin;
-    }
+  public LocalDate getBegin() {
+    return begin;
+  }
 
-    public void setBegin(LocalDate begin) {
-        this.begin = begin;
-    }
+  public void setBegin(LocalDate begin) {
+    this.begin = begin;
+  }
 
-    public LocalDate getEnd() {
-        return end;
-    }
+  public LocalDate getEnd() {
+    return end;
+  }
 
-    public void setEnd(LocalDate end) {
-        this.end = end;
-    }
+  public void setEnd(LocalDate end) {
+    this.end = end;
+  }
 }

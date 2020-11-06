@@ -35,10 +35,12 @@ public class ReserveService {
 
   public ReturnReserve createReserve(ReserveRequest reserve) {
     if (actorRepository.findByUsername(reserve.getUsernameActor().toLowerCase()) == null
-        || producerRepository.findByUsername(reserve.getUsernameProducer().toLowerCase()) == null || reserve.getBegin() == null || reserve.getEnd() == null) {
+        || producerRepository.findByUsername(reserve.getUsernameProducer().toLowerCase()) == null
+        || reserve.getBegin() == null || reserve.getEnd() == null) {
       throw new IllegalArgumentException("You need to pass a valid user or producer");
     }
-    if(reserve.getBegin().isBefore(LocalDate.now()) || reserve.getEnd().isBefore(reserve.getBegin())){
+    if (reserve.getBegin().isBefore(LocalDate.now()) || reserve.getEnd()
+        .isBefore(reserve.getBegin())) {
       throw new IllegalArgumentException("Check the date");
     }
     LocalDate begin = reserve.getBegin();
@@ -68,9 +70,12 @@ public class ReserveService {
     Reserve savedReserve = buildReserve(actor, producer, begin, end);
     reserveRepository.save(savedReserve);
 
-    ReturnActor returnActor = new ReturnActor(actor.getId(), actor.getUsername(), actor.getName(), actor.getGender(), actor.getPayment(), actor.getGenreWork());
-    ReturnProducer returnProducer = new ReturnProducer(producer.getId(), producer.getUsername(), producer.getName());
-    ReturnReserve returnReserve = new ReturnReserve(savedReserve.getId(), returnActor, returnProducer, begin, end);
+    ReturnActor returnActor = new ReturnActor(actor.getId(), actor.getUsername(), actor.getName(),
+        actor.getGender(), actor.getPayment(), actor.getGenreWork());
+    ReturnProducer returnProducer = new ReturnProducer(producer.getId(), producer.getUsername(),
+        producer.getName());
+    ReturnReserve returnReserve = new ReturnReserve(savedReserve.getId(), returnActor,
+        returnProducer, begin, end);
 
     return returnReserve;
   }
@@ -86,17 +91,8 @@ public class ReserveService {
     return newReserve;
   }
 
-//    public List<Reserve> ator(int id){
-//        var actor = actorRepository.findById(id).get();
-//        return reserveRepository.findAllByIdActor(actor);
-//    }
-
-
   public List<Reserve> listAll() {
     return (List<Reserve>) reserveRepository.findAll();
   }
 
-//    public Reserve listById(int id){
-//        return reserveRepository.findById(id).orElseThrow();
-//    }
 }

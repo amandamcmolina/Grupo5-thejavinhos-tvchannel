@@ -24,30 +24,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/producer")
-@Api(value="API REST producer")
+@Api(value = "API REST producer")
 public class ProducerController {
 
   @Autowired
   private ProducerService producerService;
 
   @PostMapping
-  @ApiOperation(value= "Create new Producer")
+  @ApiOperation(value = "Create new Producer")
   public ResponseEntity<ReturnProducer> createProducer(@RequestBody CreateProducer producer) {
     return ResponseEntity.ok(producerService.saveProducer(producer));
   }
 
   @GetMapping("/{username}")
-  @ApiOperation(value= "Return the producer's reserves")
+  @ApiOperation(value = "Return the producer's reserves")
   public ResponseEntity<List<ReturnReserve>> listById(@PathVariable String username) {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     if (auth != null &&
         auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
       return ResponseEntity.ok(producerService.reserveList(username));
     }
-
     throw new IllegalArgumentException("You are not a admin");
-
   }
-
 
 }

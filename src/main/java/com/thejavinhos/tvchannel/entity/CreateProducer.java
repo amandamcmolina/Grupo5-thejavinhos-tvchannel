@@ -6,7 +6,6 @@ public class CreateProducer {
   private String password;
   private String name;
 
-
   public String getPassword() {
     return password;
   }

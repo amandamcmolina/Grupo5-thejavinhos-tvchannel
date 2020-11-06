@@ -32,9 +32,8 @@ public class MyUserDetails implements UserDetails {
     return user.getAuthorities();
   }
 
-  public void setAuthorities(Collection<? extends GrantedAuthority> authorities)
-  {
-    this.authorities=authorities;
+  public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
+    this.authorities = authorities;
   }
 
   @Override

@@ -33,7 +33,6 @@ public class CreateActor {
     this.gender = gender;
   }
 
-
   public double getPayment() {
     return payment;
   }

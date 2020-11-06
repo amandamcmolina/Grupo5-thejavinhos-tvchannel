@@ -5,12 +5,12 @@ public class ReturnProducer {
   private int id;
   private String username;
   private String name;
-  
+
   public String getUsername() {
     return username;
   }
 
-  public ReturnProducer(){
+  public ReturnProducer() {
 
   }
 

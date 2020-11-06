@@ -2,20 +2,19 @@ package com.thejavinhos.tvchannel.controller;
 
 public class TokenDto {
 
-    private String token;
-    private String bearer;
+  private String token;
+  private String bearer;
 
-    public TokenDto(String token, String bearer) {
-        this.token = token;
+  public TokenDto(String token, String bearer) {
+    this.token = token;
+    this.bearer = bearer;
+  }
 
-        this.bearer = bearer;
-    }
+  public String getToken() {
+    return token;
+  }
 
-    public String getToken() {
-        return token;
-    }
-
-    public String getBearer() {
-        return bearer;
-    }
+  public String getBearer() {
+    return bearer;
+  }
 }

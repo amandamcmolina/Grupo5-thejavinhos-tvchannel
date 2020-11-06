@@ -23,7 +23,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SwaggerConfig {
 
 
-
   @Bean
   public Docket api() {
     return new Docket(DocumentationType.SWAGGER_2)
@@ -34,12 +33,12 @@ public class SwaggerConfig {
         .apiInfo(metaData())
         .globalOperationParameters(Arrays.asList(
             new ParameterBuilder()
-            .name("Authorization")
-            .description("Header para token JWT")
-            .modelRef(new ModelRef("string"))
-            .parameterType("header")
-            .required(false)
-            .build()
+                .name("Authorization")
+                .description("Header para token JWT")
+                .modelRef(new ModelRef("string"))
+                .parameterType("header")
+                .required(false)
+                .build()
         ))
         .ignoredParameterTypes(User.class);
 

@@ -21,27 +21,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class AutenticacaoService implements UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepository;
+  @Autowired
+  private UserRepository userRepository;
 
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
-        if(user != null){
-//            return user;
-//          return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), true,
-//              true, true, true, user.getAuthorities());
-          MyUserDetails userUm = new MyUserDetails();
-          userUm.setUser(user);
-          userUm.setId(user.getId());
-          userUm.setAuthorities(user.getAuthorities());
-          return userUm;
-        }
-
-        
-        throw new UsernameNotFoundException("Dados inválidos");
-
-
+  @Override
+  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    User user = userRepository.findByUsername(username);
+    if (user != null) {
+      MyUserDetails userUm = new MyUserDetails();
+      userUm.setUser(user);
+      userUm.setId(user.getId());
+      userUm.setAuthorities(user.getAuthorities());
+      return userUm;
     }
+
+    throw new UsernameNotFoundException("Dados inválidos");
+  }
 }

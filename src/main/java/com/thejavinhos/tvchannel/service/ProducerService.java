@@ -44,7 +44,8 @@ public class ProducerService {
       finalProducer.setPerfis(roles);
       finalProducer.setName(producer.getName());
       producerRepository.save(finalProducer);
-      ReturnProducer returnProducer = new ReturnProducer(finalProducer.getId(), finalProducer.getUsername(), finalProducer.getName());
+      ReturnProducer returnProducer = new ReturnProducer(finalProducer.getId(),
+          finalProducer.getUsername(), finalProducer.getName());
       return returnProducer;
     } else {
       throw new IllegalArgumentException("Producer already exists");
@@ -53,18 +54,20 @@ public class ProducerService {
 
   public List<ReturnReserve> reserveList(String username) {
     var producer = producerRepository.findByUsername(username);
-    if(producer == null){
+    if (producer == null) {
       throw new IndexOutOfBoundsException("this username does not exist");
     }
     List<Reserve> reserveList = reserveRepository.findAllByProducerId(producer.getId());
-    ReturnProducer returnProducer = new ReturnProducer(producer.getId(), producer.getUsername(), producer.getName());
+    ReturnProducer returnProducer = new ReturnProducer(producer.getId(), producer.getUsername(),
+        producer.getName());
     List<ReturnReserve> reserves = new ArrayList<>();
     reserveList.forEach(reserve -> {
-      ReturnActor eachActor = new ReturnActor(reserve.getActor().getId(), reserve.getActor().getUsername(), reserve.getActor().getName(),
-                              reserve.getActor().getGender(), reserve.getActor().getPayment(),
-                              reserve.getActor().getGenreWork());
+      ReturnActor eachActor = new ReturnActor(reserve.getActor().getId(),
+          reserve.getActor().getUsername(), reserve.getActor().getName(),
+          reserve.getActor().getGender(), reserve.getActor().getPayment(),
+          reserve.getActor().getGenreWork());
       ReturnReserve eachReserve = new ReturnReserve(reserve.getId(), eachActor, returnProducer,
-                                                    reserve.getDateReserveBegin(), reserve.getDateReserveEnd());
+          reserve.getDateReserveBegin(), reserve.getDateReserveEnd());
       reserves.add(eachReserve);
     });
     return reserves;

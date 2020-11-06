@@ -14,39 +14,41 @@ import java.io.IOException;
 
 public class AutenticacaoViaTokenFilter extends OncePerRequestFilter {
 
-    private TokenServicee tokenService;
-    private UserRepository userRepository;
+  private TokenServicee tokenService;
+  private UserRepository userRepository;
 
-    public AutenticacaoViaTokenFilter(TokenServicee tokenService, UserRepository userRepository) {
-        this.tokenService = tokenService;
-        this.userRepository = userRepository;
+  public AutenticacaoViaTokenFilter(TokenServicee tokenService, UserRepository userRepository) {
+    this.tokenService = tokenService;
+    this.userRepository = userRepository;
+  }
+
+  @Override
+  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+      FilterChain filterChain) throws ServletException, IOException {
+
+    String token = recuperarToken(request);
+    boolean valido = tokenService.isTokenValido(token);
+    if (valido) {
+      autenticarUser(token);
     }
 
-    @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    filterChain.doFilter(request, response);
+  }
 
-        String token = recuperarToken(request);
-        boolean valido = tokenService.isTokenValido(token);
-        if(valido){
-            autenticarUser(token);
-        }
+  private void autenticarUser(String token) {
+    Long idUsuario = tokenService.getIdUser(token);
+    User user = userRepository.findById(Integer.parseInt(idUsuario.toString())).get();
+    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+        user, null, user.getAuthorities());
+    SecurityContextHolder.getContext().setAuthentication(authentication);
+  }
 
-        filterChain.doFilter(request, response);
+  private String recuperarToken(HttpServletRequest request) {
+    String token = request.getHeader("Authorization");
+    if (token == null || token.isEmpty() || !token.startsWith("Bearer ")) {
+      return null;
     }
 
-    private void autenticarUser(String token) {
-        Long idUsuario = tokenService.getIdUser(token);
-        User user = userRepository.findById(Integer.parseInt(idUsuario.toString())).get();
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-    }
-
-    private String recuperarToken(HttpServletRequest request) {
-        String token = request.getHeader("Authorization");
-        if(token == null || token.isEmpty() || !token.startsWith("Bearer ")){
-            return null;
-        }
-
-        return token.substring(7, token.length());
-    }
+    return token.substring(7, token.length());
+  }
 }

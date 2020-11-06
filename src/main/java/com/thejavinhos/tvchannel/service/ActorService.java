@@ -38,15 +38,12 @@ public class ActorService {
   public ReturnActor saveActor(CreateActor actor) {
     if (actorRepository.findByUsername(actor.getUsername().toLowerCase()) == null) {
 
-
-
       List<Perfil> roles = new ArrayList<>();
       Optional<Perfil> byId = Optional
           .ofNullable(perfilRepository.findByRole("ROLE_USER")); // linha id role // UM PERFIL
       if (byId.isPresent()) {
         roles.add(byId.get());
       }
-
 
       Actor actorFinal = new Actor();
       actorFinal.setUsername(actor.getUsername().toLowerCase());
@@ -58,8 +55,9 @@ public class ActorService {
       actorFinal.setGenreWork(actor.getGenreWork().toLowerCase());
       actorFinal.setName(actor.getName());
       actorRepository.save(actorFinal);
-      ReturnActor returnActor = new ReturnActor(actorFinal.getId(), actorFinal.getUsername(), actorFinal.getName(),
-                                actorFinal.getGender(), actorFinal.getPayment(), actorFinal.getGenreWork());
+      ReturnActor returnActor = new ReturnActor(actorFinal.getId(), actorFinal.getUsername(),
+          actorFinal.getName(),
+          actorFinal.getGender(), actorFinal.getPayment(), actorFinal.getGenreWork());
       return returnActor;
     } else {
       throw new IllegalArgumentException("Actor already exists");
@@ -69,11 +67,12 @@ public class ActorService {
 
   public List<ReturnReserve> reserveList(String username) {
     var actor = actorRepository.findByUsername(username);
-    if(actor == null){
+    if (actor == null) {
       throw new IndexOutOfBoundsException("this username does not exist");
     }
     List<Reserve> reserveList = reserveRepository.findAllByActorId(actor.getId());
-    ReturnActor returnActor = new ReturnActor(actor.getId(), actor.getUsername(), actor.getName(), actor.getGender(),
+    ReturnActor returnActor = new ReturnActor(actor.getId(), actor.getUsername(), actor.getName(),
+        actor.getGender(),
         actor.getPayment(), actor.getGenreWork());
     List reservesActor = new ArrayList();
     reserveList.forEach(reserve -> {
@@ -97,7 +96,6 @@ public class ActorService {
   }
 
 
-  //PESQUISAR COM FILTRO
   public List<ReturnActor> searchActorFilter(Integer quantity, String genreWork, LocalDate begin,
       Double amount, String filter) {
 
@@ -117,7 +115,6 @@ public class ActorService {
   }
 
 
-  //RESULTADOS GERAIS DA PESQUISA
   public List<? extends Object> search_filter(List<Actor> actors, Integer quantity,
       String genreWork, LocalDate begin, Double amount) {
     var reserves = reserveRepository.findAll();
@@ -141,22 +138,15 @@ public class ActorService {
     });
     actors.removeAll(ac);
 
-    System.out.println("actors" + actors);
-
     List<Actor> actorsGenre = actors.stream()
         .filter(actor -> actor.getGenreWork().toLowerCase().equals(genreWork))
         .collect(Collectors.toList());
 
-    System.out.println("teste " + actorsGenre);
     if (actorsGenre.isEmpty()) {
       throw new IndexOutOfBoundsException("There are not actors with this genre");
     }
 
-    System.out.println("actorGenre: " + actorsGenre);
-
     actorsGenre.removeIf(a -> a.getPayment() > amount);
-
-    System.out.println("actorGenre2: " + actorsGenre);
 
     if (actorsGenre.isEmpty()) {
       throw new IndexOutOfBoundsException("There are no actors available in this amount");

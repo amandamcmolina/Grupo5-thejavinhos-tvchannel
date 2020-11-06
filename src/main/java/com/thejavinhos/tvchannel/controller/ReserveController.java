@@ -23,31 +23,22 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/reserve")
-@Api(value="API REST Reserve")
+@Api(value = "API REST Reserve")
 public class ReserveController {
 
-    @Autowired
-    private ReserveService reserveService;
+  @Autowired
+  private ReserveService reserveService;
 
-//    @GetMapping
-//    @ApiOperation(value= "Return reseves's list")
-//    private ResponseEntity <List<Reserve>> list(){
-//        return ResponseEntity.ok(reserveService.listAll());
-//    }
-
-
-    @PostMapping
-    @CacheEvict(value = "reservas", allEntries = true)
-    @ApiOperation(value= "create new Reserve")
-    private ResponseEntity<ReturnReserve> create(@RequestBody ReserveRequest reserve){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null &&
-            auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))){
-              return  ResponseEntity.ok(reserveService.createReserve(reserve));
-          }
-
-        throw new IllegalArgumentException("You are not a admin");
-
+  @PostMapping
+  @CacheEvict(value = "reservas", allEntries = true)
+  @ApiOperation(value = "create new Reserve")
+  private ResponseEntity<ReturnReserve> create(@RequestBody ReserveRequest reserve) {
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    if (auth != null &&
+        auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+      return ResponseEntity.ok(reserveService.createReserve(reserve));
     }
+    throw new IllegalArgumentException("You are not a admin");
+  }
 
 }

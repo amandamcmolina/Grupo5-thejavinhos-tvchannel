@@ -9,11 +9,12 @@ public class ReturnActor {
   private double payment;
   private String genreWork;
 
-  public ReturnActor(){
+  public ReturnActor() {
 
   }
 
-  public ReturnActor(int id, String username, String name, String gender, double payment, String genreWork) {
+  public ReturnActor(int id, String username, String name, String gender, double payment,
+      String genreWork) {
     this.id = id;
     this.name = name;
     this.username = username;
@@ -37,7 +38,6 @@ public class ReturnActor {
   public void setGender(String gender) {
     this.gender = gender;
   }
-
 
   public double getPayment() {
     return payment;

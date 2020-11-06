@@ -27,53 +27,48 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
     jsr250Enabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private TokenServicee tokenService;
+  @Autowired
+  private TokenServicee tokenService;
 
-    @Autowired
-    private AutenticacaoService autenticacaoService;
+  @Autowired
+  private AutenticacaoService autenticacaoService;
 
-    @Autowired
-    private UserRepository userRepository;
+  @Autowired
+  private UserRepository userRepository;
 
-    @Bean
-    @Override
-    protected AuthenticationManager authenticationManager() throws Exception{
-        return super.authenticationManager();
-    }
+  @Bean
+  @Override
+  protected AuthenticationManager authenticationManager() throws Exception {
+    return super.authenticationManager();
+  }
 
-    //configuraçoes de autorizacao
-    @Override
-    protected void configure(HttpSecurity http) throws Exception{
-        http.csrf().disable().authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/user").permitAll()//limitar os acessos por aqui
-                .antMatchers(HttpMethod.POST, "/auth").permitAll()
-                .antMatchers(HttpMethod.POST, "/actors").permitAll()
-                .antMatchers(HttpMethod.POST, "/producer").permitAll()
-                .antMatchers(HttpMethod.GET, "/producer").permitAll()
-                .antMatchers("/h2/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/actors/search").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/actors/{username}").hasRole("USER")
-                .antMatchers(HttpMethod.GET, "/producer/{username}").hasRole("ADMIN")
-                .anyRequest().authenticated()
-                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().addFilterBefore(new  AutenticacaoViaTokenFilter(tokenService, userRepository), UsernamePasswordAuthenticationFilter.class);
-//                .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    http.csrf().disable().authorizeRequests()
+        .antMatchers(HttpMethod.POST, "/user").permitAll()//limitar os acessos por aqui
+        .antMatchers(HttpMethod.POST, "/auth").permitAll()
+        .antMatchers(HttpMethod.POST, "/actors").permitAll()
+        .antMatchers(HttpMethod.POST, "/producer").permitAll()
+        .antMatchers(HttpMethod.GET, "/producer").permitAll()
+        .antMatchers("/h2/**").permitAll()
+        .antMatchers(HttpMethod.GET, "/actors/search").hasRole("ADMIN")
+        .antMatchers(HttpMethod.GET, "/actors/{username}").hasRole("USER")
+        .antMatchers(HttpMethod.GET, "/producer/{username}").hasRole("ADMIN")
+        .anyRequest().authenticated()
+        .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        .and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, userRepository),
+        UsernamePasswordAuthenticationFilter.class);
+    http.headers().frameOptions().disable();
+  }
 
-        http.headers().frameOptions().disable();
-    }
+  @Override
+  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    auth.userDetailsService(autenticacaoService).passwordEncoder(new BCryptPasswordEncoder());
+  }
 
-
-    //Configurações de autenticacao ->  controle de acesso
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception{
-        auth.userDetailsService(autenticacaoService).passwordEncoder(new BCryptPasswordEncoder());
-    }
-
-
-    //requisicoes de recursos estaticos(js, css, imagens)
-    @Override
-    public void configure(WebSecurity web) throws Exception{
-      web.ignoring().antMatchers("/**.html", "/v2/api-docs", "/webjars/**", "/configuration/**", "/swagger-resources/**");
-    }
+  @Override
+  public void configure(WebSecurity web) throws Exception {
+    web.ignoring().antMatchers("/**.html", "/v2/api-docs", "/webjars/**", "/configuration/**",
+        "/swagger-resources/**");
+  }
 }
