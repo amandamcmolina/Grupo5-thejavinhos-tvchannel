@@ -31,13 +31,13 @@ public class ProducerController {
   private ProducerService producerService;
 
   @PostMapping
-  @ApiOperation(value = "Create new Producer")
+  @ApiOperation(value = "Create new Producer    -      permit: all")
   public ResponseEntity<ReturnProducer> createProducer(@RequestBody CreateProducer producer) {
     return ResponseEntity.ok(producerService.saveProducer(producer));
   }
 
   @GetMapping("/{username}")
-  @ApiOperation(value = "Return the producer's reserves")
+  @ApiOperation(value = "Return the producer's reserves   -      permit: hole_admin and logged user")
   public ResponseEntity<List<ReturnReserve>> listById(@PathVariable String username) {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     if (auth != null &&

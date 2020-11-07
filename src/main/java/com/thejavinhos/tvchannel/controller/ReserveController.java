@@ -9,6 +9,7 @@ import com.thejavinhos.tvchannel.service.ActorService;
 import com.thejavinhos.tvchannel.service.ReserveService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -31,7 +32,7 @@ public class ReserveController {
 
   @PostMapping
   @CacheEvict(value = "reservas", allEntries = true)
-  @ApiOperation(value = "create new Reserve")
+  @ApiOperation(value = "create new Reserve      -      permit: hole-admin and logged user")
   private ResponseEntity<ReturnReserve> create(@RequestBody ReserveRequest reserve) {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     if (auth != null &&
