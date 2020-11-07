@@ -2,6 +2,7 @@ package com.thejavinhos.tvchannel.controller;
 
 import com.thejavinhos.tvchannel.entity.LoginForm;
 import com.thejavinhos.tvchannel.security.TokenServicee;
+import io.swagger.annotations.ApiOperation;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
-public class AutenticacaoController {
+public class AuthenticationController {
 
   @Autowired
   private AuthenticationManager authManager;
@@ -29,6 +30,7 @@ public class AutenticacaoController {
 
   @PostMapping
   @Transactional
+  @ApiOperation(value = "Login")
   public ResponseEntity<TokenDto> autenticar(@RequestBody @Validated LoginForm form) {
     UsernamePasswordAuthenticationToken dadosLogin = form.converter();
 
