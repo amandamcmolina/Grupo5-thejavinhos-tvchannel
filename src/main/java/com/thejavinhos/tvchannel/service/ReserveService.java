@@ -16,11 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Component
 public class ReserveService {
@@ -39,7 +35,6 @@ public class ReserveService {
     Object auth = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     String usernameLogado;
     usernameLogado = ((UserDetails)auth).getUsername();
-
     if (actorRepository.findByUsername(reserve.getUsernameActor().toLowerCase()) == null
         || producerRepository.findByUsername(usernameLogado) == null
         || reserve.getBegin() == null || reserve.getEnd() == null) {
@@ -58,9 +53,6 @@ public class ReserveService {
       LocalDate beginAtual = reserva.getDateReserveBegin();
       LocalDate endAtual = reserva.getDateReserveEnd();
 
-      System.out.println(beginAtual.compareTo(begin));
-      System.out.println(begin.isBefore(beginAtual));
-
       if (
           begin.isBefore(beginAtual) && end.isAfter(endAtual)
               || begin.isAfter(beginAtual) && begin.isBefore(endAtual)
@@ -70,14 +62,15 @@ public class ReserveService {
         throw new IllegalArgumentException("The reserve already exists");
       }
 
-      actor.setContador(actor.getContador() + 1);
     }
+
+    actor.setQtdReserves(actor.getQtdReserves() + 1);
 
     Reserve savedReserve = buildReserve(actor, producer, begin, end);
     reserveRepository.save(savedReserve);
 
     ReturnActor returnActor = new ReturnActor(actor.getId(), actor.getUsername(), actor.getName(),
-        actor.getGender(), actor.getPayment(), actor.getGenreWork());
+        actor.getGender(), actor.getPayment(), actor.getGenreWork(), actor.getQtdReserves());
     ReturnProducer returnProducer = new ReturnProducer(producer.getId(), producer.getUsername(),
         producer.getName());
     ReturnReserve returnReserve = new ReturnReserve(savedReserve.getId(), returnActor,

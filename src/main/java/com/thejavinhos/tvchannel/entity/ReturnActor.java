@@ -8,19 +8,21 @@ public class ReturnActor {
   private String gender;
   private double payment;
   private String genreWork;
+  private int qtdReserves;
 
   public ReturnActor() {
 
   }
 
   public ReturnActor(int id, String username, String name, String gender, double payment,
-      String genreWork) {
+      String genreWork, int qtdReserves) {
     this.id = id;
     this.name = name;
     this.username = username;
     this.gender = gender;
     this.payment = payment;
     this.genreWork = genreWork;
+    this.qtdReserves = qtdReserves;
   }
 
   public String getUsername() {
@@ -69,5 +71,13 @@ public class ReturnActor {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public int getQtdReserves() {
+    return qtdReserves;
+  }
+
+  public void setQtdReserves(int qtdReserves) {
+    this.qtdReserves = qtdReserves;
   }
 }

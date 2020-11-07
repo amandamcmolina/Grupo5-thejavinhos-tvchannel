@@ -15,7 +15,7 @@ public interface ActorRepository extends JpaRepository<Actor, Integer> {
 
   List<Actor> findAllByOrderByPaymentDesc();
 
-  List<Actor> findAllByOrderByContadorDesc();
+  List<Actor> findAllByOrderByQtdReservesDesc();
 
 
 }

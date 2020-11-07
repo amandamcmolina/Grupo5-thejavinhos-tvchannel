@@ -18,14 +18,14 @@ public class Actor extends User {
   private String genreWork;
 
 
-  private int contador;
+  private int qtdReserves;
 
-  public int getContador() {
-    return contador;
+  public int getQtdReserves() {
+    return qtdReserves;
   }
 
-  public void setContador(int contador) {
-    this.contador = contador;
+  public void setQtdReserves(int qtdReserves) {
+    this.qtdReserves = qtdReserves;
   }
 
   public String getGender() {

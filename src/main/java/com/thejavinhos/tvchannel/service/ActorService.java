@@ -62,7 +62,7 @@ public class ActorService {
       actorRepository.save(actorFinal);
       ReturnActor returnActor = new ReturnActor(actorFinal.getId(), actorFinal.getUsername(),
           actorFinal.getName(),
-          actorFinal.getGender(), actorFinal.getPayment(), actorFinal.getGenreWork());
+          actorFinal.getGender(), actorFinal.getPayment(), actorFinal.getGenreWork(), actorFinal.getQtdReserves());
       return returnActor;
     } else {
       throw new IllegalArgumentException("Actor already exists");
@@ -83,7 +83,7 @@ public class ActorService {
       List<Reserve> reserveList = reserveRepository.findAllByActorId(actor.getId());
       ReturnActor returnActor = new ReturnActor(actor.getId(), actor.getUsername(), actor.getName(),
           actor.getGender(),
-          actor.getPayment(), actor.getGenreWork());
+          actor.getPayment(), actor.getGenreWork(), actor.getQtdReserves());
       List reservesActor = new ArrayList();
       reserveList.forEach(reserve -> {
         ReturnProducer returnProducer = new ReturnProducer();
@@ -119,7 +119,7 @@ public class ActorService {
     } else if (filter.equals("desc")) {
       actors = actorRepository.findAllByOrderByPaymentDesc();
     } else if (filter.equals("qtdReserves")) {
-      actors = actorRepository.findAllByOrderByContadorDesc();
+      actors = actorRepository.findAllByOrderByQtdReservesDesc();
     } else {
       actors = actorRepository.findAll();
     }
@@ -178,6 +178,7 @@ public class ActorService {
       eachReturnActor.setGenreWork(actor.getGenreWork());
       eachReturnActor.setPayment(actor.getPayment());
       eachReturnActor.setUsername(actor.getUsername());
+      eachReturnActor.setQtdReserves(actor.getQtdReserves());
       returnActors.add(eachReturnActor);
     });
 

@@ -71,7 +71,7 @@ public class ProducerService {
         ReturnActor eachActor = new ReturnActor(reserve.getActor().getId(),
             reserve.getActor().getUsername(), reserve.getActor().getName(),
             reserve.getActor().getGender(), reserve.getActor().getPayment(),
-            reserve.getActor().getGenreWork());
+            reserve.getActor().getGenreWork(), reserve.getActor().getQtdReserves());
         ReturnReserve eachReserve = new ReturnReserve(reserve.getId(), eachActor, returnProducer,
             reserve.getDateReserveBegin(), reserve.getDateReserveEnd());
         reserves.add(eachReserve);
