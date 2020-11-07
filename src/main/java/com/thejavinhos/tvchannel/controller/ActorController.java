@@ -28,13 +28,13 @@ public class ActorController {
 
 
   @PostMapping
-  @ApiOperation(value = "Create new Actor - permit: all")
+  @ApiOperation(value = "Create new Actor - (permit: all)")
   public ResponseEntity<ReturnActor> createActor(@RequestBody CreateActor actor) {
     return ResponseEntity.ok(actorService.saveActor(actor));
   }
 
   @GetMapping("/{username}")
-  @ApiOperation(value = "Return the actor reserves - permit: hole_user and logged user")
+  @ApiOperation(value = "Return the actor reserves - (permit: hole_user and logged user)")
   public ResponseEntity<List<ReturnReserve>> listById(@PathVariable String username) {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     if (auth != null &&
@@ -45,7 +45,7 @@ public class ActorController {
   }
 
   @GetMapping("/search")
-  @ApiOperation(value = "Return available actors      -      filter : desc / asc / qtdReserves     -      permit: admin")
+  @ApiOperation(value = "Return available actors      -      filter : desc / asc / qtdReserves     -      (permit: admin)")
   public ResponseEntity<List<ReturnActor>> search(
       @RequestParam("quantity") Integer quantity,
       @RequestParam("genreWork") String genreWork,

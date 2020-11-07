@@ -31,7 +31,7 @@ public class AuthenticationController {
   @PostMapping
   @Transactional
 
-  @ApiOperation(value = "Login     -     permit: all")
+  @ApiOperation(value = "Login     -     (permit: all)")
   public ResponseEntity<TokenDto> autenticar(@RequestBody @Validated LoginForm form) {
     UsernamePasswordAuthenticationToken dadosLogin = form.converter();
 

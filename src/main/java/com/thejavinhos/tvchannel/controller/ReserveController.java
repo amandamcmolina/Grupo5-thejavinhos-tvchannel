@@ -32,7 +32,7 @@ public class ReserveController {
 
   @PostMapping
   @CacheEvict(value = "reservas", allEntries = true)
-  @ApiOperation(value = "create new Reserve      -      permit: hole-admin and logged user")
+  @ApiOperation(value = "create new Reserve      -      (permit: hole-admin and logged user)")
   private ResponseEntity<ReturnReserve> create(@RequestBody ReserveRequest reserve) {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     if (auth != null &&
