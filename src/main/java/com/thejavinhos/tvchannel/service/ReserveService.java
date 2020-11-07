@@ -12,6 +12,8 @@ import com.thejavinhos.tvchannel.repository.ProducerRepository;
 import com.thejavinhos.tvchannel.repository.ReserveRepository;
 import java.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
@@ -34,8 +36,12 @@ public class ReserveService {
 
 
   public ReturnReserve createReserve(ReserveRequest reserve) {
+    Object auth = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    String usernameLogado;
+    usernameLogado = ((UserDetails)auth).getUsername();
+
     if (actorRepository.findByUsername(reserve.getUsernameActor().toLowerCase()) == null
-        || producerRepository.findByUsername(reserve.getUsernameProducer().toLowerCase()) == null
+        || producerRepository.findByUsername(usernameLogado) == null
         || reserve.getBegin() == null || reserve.getEnd() == null) {
       throw new IllegalArgumentException("You need to pass a valid user or producer");
     }
@@ -46,7 +52,7 @@ public class ReserveService {
     LocalDate begin = reserve.getBegin();
     LocalDate end = reserve.getEnd();
     var actor = actorRepository.findByUsername(reserve.getUsernameActor());
-    var producer = producerRepository.findByUsername(reserve.getUsernameProducer());
+    var producer = producerRepository.findByUsername(usernameLogado);
     List<Reserve> actorList = reserveRepository.findAllByActorId(actor.getId());
     for (Reserve reserva : actorList) {
       LocalDate beginAtual = reserva.getDateReserveBegin();

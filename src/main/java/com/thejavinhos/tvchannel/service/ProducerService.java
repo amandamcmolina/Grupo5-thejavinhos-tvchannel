@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -53,24 +55,32 @@ public class ProducerService {
   }
 
   public List<ReturnReserve> reserveList(String username) {
-    var producer = producerRepository.findByUsername(username);
-    if (producer == null) {
-      throw new IndexOutOfBoundsException("this username does not exist");
+    Object auth = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    String usernameLogado;
+    usernameLogado = ((UserDetails)auth).getUsername();
+    if(usernameLogado.equals(username)){
+      var producer = producerRepository.findByUsername(username);
+      if (producer == null) {
+        throw new IndexOutOfBoundsException("this username does not exist");
+      }
+      List<Reserve> reserveList = reserveRepository.findAllByProducerId(producer.getId());
+      ReturnProducer returnProducer = new ReturnProducer(producer.getId(), producer.getUsername(),
+          producer.getName());
+      List<ReturnReserve> reserves = new ArrayList<>();
+      reserveList.forEach(reserve -> {
+        ReturnActor eachActor = new ReturnActor(reserve.getActor().getId(),
+            reserve.getActor().getUsername(), reserve.getActor().getName(),
+            reserve.getActor().getGender(), reserve.getActor().getPayment(),
+            reserve.getActor().getGenreWork());
+        ReturnReserve eachReserve = new ReturnReserve(reserve.getId(), eachActor, returnProducer,
+            reserve.getDateReserveBegin(), reserve.getDateReserveEnd());
+        reserves.add(eachReserve);
+      });
+      return reserves;
+
+
     }
-    List<Reserve> reserveList = reserveRepository.findAllByProducerId(producer.getId());
-    ReturnProducer returnProducer = new ReturnProducer(producer.getId(), producer.getUsername(),
-        producer.getName());
-    List<ReturnReserve> reserves = new ArrayList<>();
-    reserveList.forEach(reserve -> {
-      ReturnActor eachActor = new ReturnActor(reserve.getActor().getId(),
-          reserve.getActor().getUsername(), reserve.getActor().getName(),
-          reserve.getActor().getGender(), reserve.getActor().getPayment(),
-          reserve.getActor().getGenreWork());
-      ReturnReserve eachReserve = new ReturnReserve(reserve.getId(), eachActor, returnProducer,
-          reserve.getDateReserveBegin(), reserve.getDateReserveEnd());
-      reserves.add(eachReserve);
-    });
-    return reserves;
+    throw new IndexOutOfBoundsException("That is not your perfil");
 
   }
 }

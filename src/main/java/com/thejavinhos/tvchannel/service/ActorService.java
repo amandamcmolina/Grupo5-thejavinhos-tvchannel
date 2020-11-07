@@ -2,11 +2,13 @@ package com.thejavinhos.tvchannel.service;
 
 import com.thejavinhos.tvchannel.entity.Actor;
 import com.thejavinhos.tvchannel.entity.CreateActor;
+import com.thejavinhos.tvchannel.entity.MyUserDetails;
 import com.thejavinhos.tvchannel.entity.Perfil;
 import com.thejavinhos.tvchannel.entity.Reserve;
 import com.thejavinhos.tvchannel.entity.ReturnActor;
 import com.thejavinhos.tvchannel.entity.ReturnProducer;
 import com.thejavinhos.tvchannel.entity.ReturnReserve;
+import com.thejavinhos.tvchannel.entity.User;
 import com.thejavinhos.tvchannel.repository.ActorRepository;
 import com.thejavinhos.tvchannel.repository.PerfilRepository;
 import com.thejavinhos.tvchannel.repository.ReserveRepository;
@@ -14,6 +16,9 @@ import java.text.Normalizer;
 import java.time.LocalDate;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 
@@ -66,23 +71,31 @@ public class ActorService {
 
 
   public List<ReturnReserve> reserveList(String username) {
-    var actor = actorRepository.findByUsername(username);
-    if (actor == null) {
-      throw new IndexOutOfBoundsException("this username does not exist");
+    Object auth = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    String username1;
+    username1 = ((UserDetails)auth).getUsername();
+
+    if(username.equals(username1)){
+      var actor = actorRepository.findByUsername(username1);
+      if (actor == null) {
+        throw new IndexOutOfBoundsException("this username does not exist");
+      }
+      List<Reserve> reserveList = reserveRepository.findAllByActorId(actor.getId());
+      ReturnActor returnActor = new ReturnActor(actor.getId(), actor.getUsername(), actor.getName(),
+          actor.getGender(),
+          actor.getPayment(), actor.getGenreWork());
+      List reservesActor = new ArrayList();
+      reserveList.forEach(reserve -> {
+        ReturnProducer returnProducer = new ReturnProducer();
+        returnProducer.setUsername(reserve.getProducer().getUsername());
+        ReturnReserve eachReserve = new ReturnReserve(reserve.getId(), returnActor, returnProducer,
+            reserve.getDateReserveBegin(), reserve.getDateReserveEnd());
+        reservesActor.add(eachReserve);
+      });
+      return reservesActor;
     }
-    List<Reserve> reserveList = reserveRepository.findAllByActorId(actor.getId());
-    ReturnActor returnActor = new ReturnActor(actor.getId(), actor.getUsername(), actor.getName(),
-        actor.getGender(),
-        actor.getPayment(), actor.getGenreWork());
-    List reservesActor = new ArrayList();
-    reserveList.forEach(reserve -> {
-      ReturnProducer returnProducer = new ReturnProducer();
-      returnProducer.setUsername(reserve.getProducer().getUsername());
-      ReturnReserve eachReserve = new ReturnReserve(reserve.getId(), returnActor, returnProducer,
-          reserve.getDateReserveBegin(), reserve.getDateReserveEnd());
-      reservesActor.add(eachReserve);
-    });
-    return reservesActor;
+    throw new IndexOutOfBoundsException("That is not your perfil");
+
   }
 
 
@@ -105,7 +118,7 @@ public class ActorService {
       actors = actorRepository.findAllByOrderByPaymentAsc();
     } else if (filter.equals("desc")) {
       actors = actorRepository.findAllByOrderByPaymentDesc();
-    } else if (filter.equals("reserves")) {
+    } else if (filter.equals("qtdReserves")) {
       actors = actorRepository.findAllByOrderByContadorDesc();
     } else {
       actors = actorRepository.findAll();
