@@ -6,18 +6,18 @@ import java.util.Date;
 
 public class ReserveRequest {
 
-  private String usernameProducer;
+//  private String usernameProducer;
   private String usernameActor;
   private LocalDate begin;
   private LocalDate end;
 
-  public String getUsernameProducer() {
-    return usernameProducer;
-  }
-
-  public void setUsernameProducer(String usernameProducer) {
-    this.usernameProducer = usernameProducer;
-  }
+//  public String getUsernameProducer() {
+//    return usernameProducer;
+//  }
+//
+//  public void setUsernameProducer(String usernameProducer) {
+//    this.usernameProducer = usernameProducer;
+//  }
 
   public String getUsernameActor() {
     return usernameActor;

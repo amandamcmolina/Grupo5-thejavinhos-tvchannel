@@ -45,7 +45,7 @@ public class ActorController {
   }
 
   @GetMapping("/search")
-  @ApiOperation(value = "Return available actors - filter : desc / asc / reserves")
+  @ApiOperation(value = "Return available actors - filter : desc / asc / qtdReserves")
   public ResponseEntity<List<ReturnActor>> search(
       @RequestParam("quantity") Integer quantity,
       @RequestParam("genreWork") String genreWork,
