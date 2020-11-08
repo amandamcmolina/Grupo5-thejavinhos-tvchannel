@@ -37,7 +37,7 @@ public class ProducerController {
   }
 
   @GetMapping("/{username}")
-  @ApiOperation(value = "Return the producer's reserves   -      (permit: hole_admin and logged user)")
+  @ApiOperation(value = "Return the producer's reserves   -      (permit: admin and logged user)")
   public ResponseEntity<List<ReturnReserve>> listById(@PathVariable String username) {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     if (auth != null &&

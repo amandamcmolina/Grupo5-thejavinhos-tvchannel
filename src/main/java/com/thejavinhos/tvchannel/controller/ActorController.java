@@ -34,7 +34,7 @@ public class ActorController {
   }
 
   @GetMapping("/{username}")
-  @ApiOperation(value = "Return the actor reserves - (permit: hole_user and logged user)")
+  @ApiOperation(value = "Return the actor reserves - (permit: user and logged user)")
   public ResponseEntity<List<ReturnReserve>> listById(@PathVariable String username) {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     if (auth != null &&

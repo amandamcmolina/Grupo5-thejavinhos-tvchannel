@@ -35,7 +35,7 @@ public class ReserveService {
     Object auth = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     String usernameLogado;
     usernameLogado = ((UserDetails)auth).getUsername();
-    if (actorRepository.findByUsername(reserve.getUsernameActor().toLowerCase()) == null
+    if (actorRepository.findByUsername(reserve.getActorUsername().toLowerCase()) == null
         || producerRepository.findByUsername(usernameLogado) == null
         || reserve.getBegin() == null || reserve.getEnd() == null) {
       throw new IllegalArgumentException("You need to pass a valid user or producer");
@@ -46,7 +46,7 @@ public class ReserveService {
     }
     LocalDate begin = reserve.getBegin();
     LocalDate end = reserve.getEnd();
-    var actor = actorRepository.findByUsername(reserve.getUsernameActor());
+    var actor = actorRepository.findByUsername(reserve.getActorUsername());
     var producer = producerRepository.findByUsername(usernameLogado);
     List<Reserve> actorList = reserveRepository.findAllByActorId(actor.getId());
     for (Reserve reserva : actorList) {

@@ -1,30 +1,19 @@
 package com.thejavinhos.tvchannel.entity;
 
 import java.time.LocalDate;
-import javax.persistence.Column;
-import java.util.Date;
 
 public class ReserveRequest {
 
-//  private String usernameProducer;
-  private String usernameActor;
+  private String actorUsername;
   private LocalDate begin;
   private LocalDate end;
 
-//  public String getUsernameProducer() {
-//    return usernameProducer;
-//  }
-//
-//  public void setUsernameProducer(String usernameProducer) {
-//    this.usernameProducer = usernameProducer;
-//  }
-
-  public String getUsernameActor() {
-    return usernameActor;
+  public String getActorUsername() {
+    return actorUsername;
   }
 
-  public void setUsernameActor(String usernameActor) {
-    this.usernameActor = usernameActor;
+  public void setActorUsername(String actorUsername) {
+    this.actorUsername = actorUsername;
   }
 
   public LocalDate getBegin() {
